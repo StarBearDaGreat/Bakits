@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakits - Bake Happiness, Make Happiness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Sticky Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d4856a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            background: #d4856a;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #c07458;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: relative;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            background: rgba(0,0,0,0.4);
+            padding: 3rem;
+            border-radius: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            background: #d4856a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #c07458;
+        }
+
+        /* Instructions Section */
+        .instructions {
+            padding: 4rem 2rem;
+            background: #fdf8f5;
+            text-align: center;
+        }
+
+        .instructions h2 {
+            font-size: 2.5rem;
+            color: #d4856a;
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            padding: 2rem;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            color: #d4856a;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Subscribe Section */
+        .subscribe {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .subscribe h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #d4856a;
+            margin-bottom: 3rem;
+        }
+
+        .subscription-plans {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .plan {
+            border: 2px solid #d4856a;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(212, 133, 106, 0.3);
+        }
+
+        .plan h3 {
+            font-size: 1.8rem;
+            color: #d4856a;
+            margin-bottom: 1rem;
+        }
+
+        .plan p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .plan-btn {
+            padding: 1rem 2rem;
+            background: #d4856a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .plan-btn:hover {
+            background: #c07458;
+        }
+
+        /* Recipes Section */
+        .recipes {
+            padding: 4rem 2rem;
+            background: #fdf8f5;
+        }
+
+        .recipes h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #d4856a;
+            margin-bottom: 3rem;
+        }
+
+        .recipe-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recipe-info {
+            padding: 1.5rem;
+        }
+
+        .recipe-info h3 {
+            color: #d4856a;
+            margin-bottom: 0.5rem;
+        }
+
+        .recipe-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Recipe Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content h2 {
+            color: #d4856a;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h3 {
+            color: #d4856a;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Bakits</div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showSection('home')">Home</button>
+                <button class="nav-btn" onclick="showSection('subscribe')">Subscribe</button>
+                <button class="nav-btn" onclick="showSection('recipes')">Recipes</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="active">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="slideshow">
+                <div class="slide active">
+                    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1200" alt="Chocolate chip cookies">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200" alt="Assorted cookies">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=1200" alt="Fresh baked cookies">
+                </div>
+            </div>
+            <div class="hero-content">
+                <h1>Bake happiness, make happiness</h1>
+                <button class="cta-btn" onclick="showSection('subscribe')">Subscribe Now</button>
+            </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="instructions">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Subscribe</h3>
+                    <p>Choose your perfect subscription plan</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Bake the Cookies</h3>
+                    <p>Follow our easy recipes with pre-measured ingredients</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Enjoy Your Delicious Treats!</h3>
+                    <p>Share the happiness with friends and family</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe Section -->
+    <section id="subscribe">
+        <div class="subscribe">
+            <h2>Choose Your Plan</h2>
+            <div class="subscription-plans">
+                <div class="plan">
+                    <h3>Bi-Weekly</h3>
+                    <p>Fresh cookie kits delivered every 2 weeks</p>
+                    <p style="font-size: 2rem; color: #d4856a; font-weight: bold;">$29.99</p>
+                    <button class="plan-btn">Subscribe</button>
+                </div>
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <p>A monthly treat delivered to your door</p>
+                    <p style="font-size: 2rem; color: #d4856a; font-weight: bold;">$24.99</p>
+                    <button class="plan-btn">Subscribe</button>
+                </div>
+                <div class="plan">
+                    <h3>Gift Set</h3>
+                    <p>3 months of bi-weekly deliveries - perfect for gifting!</p>
+                    <p style="font-size: 2rem; color: #d4856a; font-weight: bold;">$159.99</p>
+                    <button class="plan-btn">Gift Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section id="recipes">
+        <div class="recipes">
+            <h2>Our Cookie Recipes</h2>
+            <div class="recipe-grid">
+                <div class="recipe-card" onclick="showRecipe('chocolate-chip')">
+                    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400" alt="Chocolate Chip Cookies">
+                    <div class="recipe-info">
+                        <h3>Classic Chocolate Chip</h3>
+                        <p class="recipe-time">⏱️ 25 minutes</p>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('oatmeal-raisin')">
+                    <img src="https://images.unsplash.com/photo-1590080876293-4b0c0c9cf909?w=400" alt="Oatmeal Raisin Cookies">
+                    <div class="recipe-info">
+                        <h3>Oatmeal Raisin</h3>
+                        <p class="recipe-time">⏱️ 30 minutes</p>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('double-chocolate')">
+                    <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b7?w=400" alt="Double Chocolate Cookies">
+                    <div class="recipe-info">
+                        <h3>Double Chocolate</h3>
+                        <p class="recipe-time">⏱️ 20 minutes</p>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('snickerdoodle')">
+                    <img src="https://images.unsplash.com/photo-1619806840578-2fec7d55d7d7?w=400" alt="Snickerdoodle Cookies">
+                    <div class="recipe-info">
+                        <h3>Snickerdoodle</h3>
+                        <p class="recipe-time">⏱️ 22 minutes</p>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('peanut-butter')">
+                    <img src="https://images.unsplash.com/photo-1560180815-ae2835488151?w=400" alt="Peanut Butter Cookies">
+                    <div class="recipe-info">
+                        <h3>Peanut Butter</h3>
+                        <p class="recipe-time">⏱️ 18 minutes</p>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('sugar-cookie')">
+                    <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400" alt="Sugar Cookies">
+                    <div class="recipe-info">
+                        <h3>Classic Sugar</h3>
+                        <p class="recipe-time">⏱️ 28 minutes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Detail Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <img id="modalImage" src="" alt="">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <h3>What's Included in Your Recipe Box:</h3>
+            <ul id="modalIngredients"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 4000);
+
+        // Section navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Recipe data
+        const recipes = {
+            'chocolate-chip': {
+                image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800',
+                title: 'Classic Chocolate Chip',
+                description: 'Our signature recipe features premium semi-sweet chocolate chips in a buttery vanilla dough. These cookies bake up with crispy edges and a soft, chewy center that melts in your mouth.',
+                ingredients: [
+                    'Pre-measured flour blend',
+                    'Brown sugar & granulated sugar packets',
+                    'Premium chocolate chips',
+                    'Vanilla extract',
+                    'Baking essentials packet (baking soda, salt)',
+                    'Detailed recipe card'
+                ]
+            },
+            'oatmeal-raisin': {
+                image: 'https://images.unsplash.com/photo-1590080876293-4b0c0c9cf909?w=800',
+                title: 'Oatmeal Raisin',
+                description: 'A wholesome classic featuring rolled oats, plump raisins, and warm cinnamon spice. These hearty cookies are perfect for breakfast or an afternoon snack.',
+                ingredients: [
+                    'Premium rolled oats',
+                    'Pre-measured flour',
+                    'Sun-dried raisins',
+                    'Cinnamon & spice blend',
+                    'Brown sugar packet',
+                    'Detailed recipe card'
+                ]
+            },
+            'double-chocolate': {
+                image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b7?w=800',
+                title: 'Double Chocolate',
+                description: 'For serious chocolate lovers! Rich cocoa dough loaded with dark and milk chocolate chunks. Decadent, fudgy, and absolutely irresistible.',
+                ingredients: [
+                    'Premium cocoa powder',
+                    'Dark chocolate chunks',
+                    'Milk chocolate chips',
+                    'Pre-measured flour blend',
+                    'Sugar packets',
+                    'Detailed recipe card'
+                ]
+            },
+            'snickerdoodle': {
+                image: 'https://images.unsplash.com/photo-1619806840578-2fec7d55d7d7?w=800',
+                title: 'Snickerdoodle',
+                description: 'These cinnamon-sugar coated cookies are soft, chewy, and full of warm spice. A nostalgic favorite that brings comfort with every bite.',
+                ingredients: [
+                    'Pre-measured flour',
+                    'Cinnamon-sugar coating',
+                    'Cream of tartar',
+                    'Sugar packets',
+                    'Vanilla extract',
+                    'Detailed recipe card'
+                ]
+            },
+            'peanut-butter': {
+                image: 'https://images.unsplash.com/photo-1560180815-ae2835488151?w=800',
+                title: 'Peanut Butter',
+                description: 'Rich, nutty, and perfectly sweet. These classic peanut butter cookies have the iconic crisscross pattern and melt-in-your-mouth texture.',
+                ingredients: [
+                    'Premium peanut butter powder',
+                    'Pre-measured flour',
+                    'Brown sugar packet',
+                    'Vanilla extract',
+                    'Baking essentials',
+                    'Detailed recipe card'
+                ]
+            },
+            'sugar-cookie': {
+                image: 'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=800',
+                title: 'Classic Sugar',
+                description: 'A timeless favorite! These buttery sugar cookies are perfect for decorating or enjoying plain. Soft, sweet, and utterly delicious.',
+                ingredients: [
+                    'Pre-measured flour',
+                    'Vanilla sugar blend',
+                    'Colored sprinkles',
+                    'Vanilla extract',
+                    'Baking essentials packet',
+                    'Detailed recipe card'
+                ]
+            }
+        };
+
+        // Show recipe modal
+        function showRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            const modal = document.getElementById('recipeModal');
+            
+            document.getElementById('modalImage').src = recipe.image;
+            document.getElementById('modalTitle').textContent = recipe.title;
+            document.getElementById('modalDescription').textContent = recipe.description;
+            
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = '';
+            recipe.ingredients.forEach(ingredient => {
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                ingredientsList.appendChild(li);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('recipeModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('recipeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
