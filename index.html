@@ -755,35 +755,35 @@
         <section class="recipes">
             <h2>Our Cookie Recipes</h2>
             <div class="recipe-grid">
-                <div class="recipe-card" onclick="showRecipe('chocolate-chip')">
+                <div class="recipe-card" onclick="showRecipe('Overnight Chocolate Chip Cookies')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Overnight Chocolate Chip Cookie</h3>
+                        <h3>Overnight Chocolate Chip Cookies</h3>
                         <p class="recipe-time">⏱️ 35 minutes, 🧊 12 hours</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('oatmeal-raisin')">
+                <div class="recipe-card" onclick="showRecipe('Mexican Hot Chocolate Cookies')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Oatmeal Raisin</h3>
-                        <p class="recipe-time">⏱️ 30 minutes</p>
+                        <h3>Mexican Hot Chocolate Cookies</h3>
+                        <p class="recipe-time">⏱️ 30 minutes, 🧊 2 hours</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('double-chocolate')">
+                <div class="recipe-card" onclick="showRecipe('Gochujang Caramel Cookies')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
                         <h3>Double Chocolate Delight</h3>
-                        <p class="recipe-time">⏱️ 28 minutes</p>
+                        <p class="recipe-time">⏱️ 28 minutes, 🧊 30 minutes</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
                 <div class="recipe-card" onclick="showRecipe('peanut-butter')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Peanut Butter Bliss</h3>
-                        <p class="recipe-time">⏱️ 22 minutes</p>
+                        <h3>Cultured Butter Cookies</h3>
+                        <p class="recipe-time">⏱️ 22 minutes 🧊 2 hours</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
@@ -912,10 +912,10 @@
     <script>
         // Recipe data
         const recipes = {
-            'chocolate-chip': {
+            'Overnight Chocolate Chipe Cookie': {
                 name: 'Overnight Chocolate Chip Cookie',
                 image: "url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800&q=80') center/cover",
-                difficulty: 'Easy',
+                difficulty: 'Medium',
                 yield: '24 cookies',
                 time: '35 minutes, 12 hour chilling',
                 description: 'Our Classic Chocolate Chip cookie is a timeless favorite that brings joy to every bite. Made with premium Belgian chocolate chips and real butter, these cookies deliver the perfect balance of crispy edges and chewy centers. The recipe has been perfected over years to ensure that golden-brown exterior and melty chocolate goodness. Whether you\'re baking for a special occasion or just treating yourself, these cookies are guaranteed to become a household staple.',
@@ -928,7 +928,7 @@
                     'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
                 ]
             },
-            'oatmeal-raisin': {
+            'Mexican Hot Chocolate Cookies': {
                 name: 'Mexican Hot Chocolate Cookies',
                 image: "url('https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?w=800&q=80') center/cover",
                 difficulty: 'Medium',
@@ -936,45 +936,44 @@
                 time: '45 minutes, 2 hour chilling',
                 description: 'A wholesome and hearty cookie that combines rolled oats with plump, juicy raisins. Our Oatmeal Raisin cookies offer a delightful chewiness and natural sweetness that makes them perfect for breakfast or an afternoon snack. Enhanced with a hint of cinnamon and nutmeg, each bite brings warmth and comfort. These cookies are loved by health-conscious bakers who don\'t want to compromise on flavor.',
                 included: [
-                    'Premium rolled oats',
-                    'Sun-dried California raisins',
-                    'Organic cinnamon',
+                    'Premium cayanne pepper powder',
+                    'Rich organic cinnamon',
+                    'Mini',
                     'Whole wheat flour blend',
                     'Nutmeg spice',
                     'Brown sugar',
                     'Butter and eggs (you provide)',
-                    'Detailed baking instructions'
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
                 ]
             },
-            'double-chocolate': {
-                name: 'Double Chocolate Delight',
+            'Gochujang Caramel Cookies': {
+                name: 'Gochujang Caramel Cookies',
                 image: "url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover",
-                difficulty: 'Medium',
+                difficulty: 'Easy',
                 yield: '22 cookies',
-                time: '28 minutes',
+                time: '28 minutes, 15 min chilling',
                 description: 'For the true chocolate lover, our Double Chocolate Delight is an indulgent experience. Rich cocoa powder is combined with dark chocolate chunks to create an intensely chocolatey cookie with a fudgy texture. The cookies have a beautiful crackled surface and maintain their soft, decadent interior. Perfect for special occasions or when you need a serious chocolate fix.',
                 included: [
-                    'Premium Dutch-process cocoa',
-                    'Dark chocolate chunks (70% cacao)',
+                    'Gochujang paste - a fermented Korean chili paste with a hit of sweetness',
+                    'Dark brown sugar to deepen the flavor',
                     'High-quality all-purpose flour',
-                    'Espresso powder for depth',
                     'Pure vanilla extract',
-                    'Sugar blend',
-                    'Butter and eggs (you provide)',
-                    'Professional baking tips'
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
                 ]
             },
-            'peanut-butter': {
-                name: 'Peanut Butter Bliss',
+            'Cultured Butter Cookies': {
+                name: 'Cultured Butter Cookies',
                 image: "url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=800&q=80') center/cover",
                 difficulty: 'Easy',
                 yield: '26 cookies',
-                time: '22 minutes',
+                time: '22 minutes, 2 hours chilling',
                 description: 'Our Peanut Butter Bliss cookies are a peanut butter lover\'s dream come true. Made with creamy peanut butter and featuring the classic crisscross pattern on top, these cookies deliver rich, nutty flavor in every bite. They have a wonderful tender crumb and that signature peanut butter cookie texture. Simple to make yet incredibly satisfying.',
                 included: [
                     'Premium creamy peanut butter',
                     'All-purpose flour',
-                    'Brown sugar',
+                    'Light brown sugar to not overpower the delicateness of the cookie',
                     'White sugar',
                     'Pure vanilla extract',
                     'Baking essentials',
