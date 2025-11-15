@@ -685,4 +685,199 @@
         <div class="payment-page">
             <h1>Payment Method</h1>
             <p>We accept payment via <strong>Mbway</strong></p>
-            <p>Please contact us at <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a> to complete your purchase with Mbway payment
+            <p>Please contact us at <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a> to complete your purchase with Mbway payment.</p>
+            <a href="#" class="back-btn" onclick="showPage('recipes')">Back to Recipes</a>
+        </div>
+    </div>
+
+    <script>
+        // Recipe data
+        const recipes = {
+            'chocolate-chip': {
+                name: 'Classic Chocolate Chip',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23D4A574%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%238B4513%22/><circle cx=%22130%22 cy=%2290%22 r=%228%22 fill=%22%23654321%22/><circle cx=%22170%22 cy=%2290%22 r=%228%22 fill=%22%23654321%22/><circle cx=%22150%22 cy=%22110%22 r=%228%22 fill=%22%23654321%22/></svg>')",
+                difficulty: 'Easy',
+                yield: '24 cookies',
+                time: '25 minutes',
+                description: 'Our Classic Chocolate Chip cookie is a timeless favorite that brings joy to every bite. Made with premium Belgian chocolate chips and real butter, these cookies deliver the perfect balance of crispy edges and chewy centers. The recipe has been perfected over years to ensure that golden-brown exterior and melty chocolate goodness. Whether you\'re baking for a special occasion or just treating yourself, these cookies are guaranteed to become a household staple.',
+                included: [
+                    'Premium all-purpose flour',
+                    'Authentic Belgian chocolate chips',
+                    'Pure vanilla extract',
+                    'Brown and white sugar blend',
+                    'Farm-fresh butter (you provide)',
+                    'Free-range eggs (you provide)',
+                    'Step-by-step recipe card'
+                ]
+            },
+            'oatmeal-raisin': {
+                name: 'Oatmeal Raisin',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23FFE4B5%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%23F4A460%22/><circle cx=%22140%22 cy=%2285%22 r=%226%22 fill=%22%23D2691E%22/><circle cx=%22160%22 cy=%2295%22 r=%226%22 fill=%22%23D2691E%22/><circle cx=%22150%22 cy=%22110%22 r=%226%22 fill=%22%23D2691E%22/></svg>')",
+                difficulty: 'Easy',
+                yield: '20 cookies',
+                time: '30 minutes',
+                description: 'A wholesome and hearty cookie that combines rolled oats with plump, juicy raisins. Our Oatmeal Raisin cookies offer a delightful chewiness and natural sweetness that makes them perfect for breakfast or an afternoon snack. Enhanced with a hint of cinnamon and nutmeg, each bite brings warmth and comfort. These cookies are loved by health-conscious bakers who don\'t want to compromise on flavor.',
+                included: [
+                    'Premium rolled oats',
+                    'Sun-dried California raisins',
+                    'Organic cinnamon',
+                    'Whole wheat flour blend',
+                    'Nutmeg spice',
+                    'Brown sugar',
+                    'Butter and eggs (you provide)',
+                    'Detailed baking instructions'
+                ]
+            },
+            'double-chocolate': {
+                name: 'Double Chocolate Delight',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23654321%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%233E2723%22/><circle cx=%22135%22 cy=%2290%22 r=%228%22 fill=%22%23000%22/><circle cx=%22165%22 cy=%2290%22 r=%228%22 fill=%22%23000%22/><circle cx=%22150%22 cy=%22115%22 r=%228%22 fill=%22%23000%22/></svg>')",
+                difficulty: 'Medium',
+                yield: '22 cookies',
+                time: '28 minutes',
+                description: 'For the true chocolate lover, our Double Chocolate Delight is an indulgent experience. Rich cocoa powder is combined with dark chocolate chunks to create an intensely chocolatey cookie with a fudgy texture. The cookies have a beautiful crackled surface and maintain their soft, decadent interior. Perfect for special occasions or when you need a serious chocolate fix.',
+                included: [
+                    'Premium Dutch-process cocoa',
+                    'Dark chocolate chunks (70% cacao)',
+                    'High-quality all-purpose flour',
+                    'Espresso powder for depth',
+                    'Pure vanilla extract',
+                    'Sugar blend',
+                    'Butter and eggs (you provide)',
+                    'Professional baking tips'
+                ]
+            },
+            'peanut-butter': {
+                name: 'Peanut Butter Bliss',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23FFDAB9%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%23CD853F%22/><line x1=%22130%22 y1=%22100%22 x2=%22170%22 y2=%22100%22 stroke=%22%23A0522D%22 stroke-width=%224%22/><line x1=%22150%22 y1=%2280%22 x2=%22150%22 y2=%22120%22 stroke=%22%23A0522D%22 stroke-width=%224%22/></svg>')",
+                difficulty: 'Easy',
+                yield: '26 cookies',
+                time: '22 minutes',
+                description: 'Our Peanut Butter Bliss cookies are a peanut butter lover\'s dream come true. Made with creamy peanut butter and featuring the classic crisscross pattern on top, these cookies deliver rich, nutty flavor in every bite. They have a wonderful tender crumb and that signature peanut butter cookie texture. Simple to make yet incredibly satisfying.',
+                included: [
+                    'Premium creamy peanut butter',
+                    'All-purpose flour',
+                    'Brown sugar',
+                    'White sugar',
+                    'Pure vanilla extract',
+                    'Baking essentials',
+                    'Eggs and butter (you provide)',
+                    'Classic recipe instructions'
+                ]
+            },
+            'sugar-cookie': {
+                name: 'Classic Sugar Cookie',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23FFF8DC%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%23FAEBD7%22/><circle cx=%22140%22 cy=%2290%22 r=%224%22 fill=%22%23FFB6C1%22/><circle cx=%22160%22 cy=%2290%22 r=%224%22 fill=%22%23FFB6C1%22/><circle cx=%22150%22 cy=%22105%22 r=%224%22 fill=%22%23FFB6C1%22/></svg>')",
+                difficulty: 'Easy',
+                yield: '30 cookies',
+                time: '20 minutes',
+                description: 'Sometimes simplicity is perfection. Our Classic Sugar Cookies are buttery, tender, and topped with sparkling sugar crystals. These versatile cookies are perfect for any occasion and can be decorated to match any theme. The dough is easy to work with and the cookies hold their shape beautifully, making them ideal for cookie decorating parties or simple everyday treats.',
+                included: [
+                    'Premium cake flour for tenderness',
+                    'Sparkling sugar crystals',
+                    'Pure vanilla extract',
+                    'Almond extract',
+                    'Granulated sugar',
+                    'Optional food coloring',
+                    'Butter and eggs (you provide)',
+                    'Decorating ideas guide'
+                ]
+            },
+            'snickerdoodle': {
+                name: 'Cinnamon Snickerdoodle',
+                image: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22><rect fill=%22%23F5DEB3%22 width=%22300%22 height=%22200%22/><circle cx=%22150%22 cy=%22100%22 r=%2260%22 fill=%22%23D2B48C%22/><circle cx=%22135%22 cy=%2290%22 r=%223%22 fill=%22%23A0522D%22/><circle cx=%22165%22 cy=%2295%22 r=%223%22 fill=%22%23A0522D%22/><circle cx=%22150%22 cy=%22110%22 r=%223%22 fill=%22%23A0522D%22/></svg>')",
+                difficulty: 'Easy',
+                yield: '28 cookies',
+                time: '26 minutes',
+                description: 'Rolled in cinnamon sugar and baked to perfection, our Snickerdoodle cookies are a cozy treat that brings back childhood memories. These cookies have a distinctive tangy flavor from cream of tartar and a wonderful soft, chewy texture. The cinnamon-sugar coating creates a slightly crispy exterior that gives way to a tender center. They\'re the perfect companion to a glass of cold milk or hot cocoa.',
+                included: [
+                    'Ceylon cinnamon (premium quality)',
+                    'Cream of tartar',
+                    'All-purpose flour',
+                    'Cinnamon-sugar coating mix',
+                    'Pure vanilla extract',
+                    'White sugar',
+                    'Butter and eggs (you provide)',
+                    'Tips for perfect texture'
+                ]
+            }
+        };
+
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 4000);
+
+        // Page navigation
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.add('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            
+            // Show selected page
+            switch(page) {
+                case 'home':
+                    document.getElementById('home-page').classList.remove('hidden');
+                    break;
+                case 'subscribe':
+                    document.getElementById('subscribe-page').classList.remove('hidden');
+                    break;
+                case 'recipes':
+                    document.getElementById('recipes-page').classList.remove('hidden');
+                    break;
+                case 'subscription-payment':
+                    document.getElementById('subscription-payment-page').classList.remove('hidden');
+                    break;
+                case 'mbway-payment':
+                    document.getElementById('mbway-payment-page').classList.remove('hidden');
+                    break;
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show individual recipe
+        function showRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            
+            // Populate recipe details
+            document.getElementById('detail-image').style.background = recipe.image;
+            document.getElementById('detail-name').textContent = recipe.name;
+            document.getElementById('detail-difficulty').textContent = recipe.difficulty;
+            document.getElementById('detail-yield').textContent = recipe.yield;
+            document.getElementById('detail-time').textContent = recipe.time;
+            document.getElementById('detail-description').textContent = recipe.description;
+            
+            // Populate included items
+            const includedList = document.getElementById('detail-included');
+            includedList.innerHTML = '';
+            recipe.included.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                includedList.appendChild(li);
+            });
+            
+            // Show recipe detail page
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.remove('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
