@@ -755,7 +755,7 @@
         <section class="recipes">
             <h2>Our Cookie Recipes</h2>
             <div class="recipe-grid">
-                <div class="recipe-card" onclick="showRecipe('Overnight Chocolate Chip Cookies')">
+                <div class="recipe-card" onclick="showRecipe('Overnight Chocolate Chip Cookie')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
                         <h3>Overnight Chocolate Chip Cookies</h3>
@@ -774,16 +774,16 @@
                 <div class="recipe-card" onclick="showRecipe('Gochujang Caramel Cookies')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Double Chocolate Delight</h3>
+                        <h3>Gochujang Caramel Cookies</h3>
                         <p class="recipe-time">⏱️ 28 minutes, 🧊 30 minutes</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('peanut-butter')">
+                <div class="recipe-card" onclick="showRecipe('Cultured Butter Cookies')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
                         <h3>Cultured Butter Cookies</h3>
-                        <p class="recipe-time">⏱️ 22 minutes 🧊 2 hours</p>
+                        <p class="recipe-time">⏱️ 22 minutes, 🧊 2 hours</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
@@ -855,251 +855,4 @@
     </div>
 
     <!-- Mbway Payment Page -->
-    <div id="mbway-payment-page" class="hidden">
-        <div class="payment-page">
-            <h1>Payment Method</h1>
-            <p>We accept payment via <strong>Mbway</strong></p>
-            <p>Please contact us at <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a> to complete your purchase with Mbway payment.</p>
-            <a href="#" class="back-btn" onclick="showPage('recipes')">Back to Recipes</a>
-        </div>
-    </div>
-
-    <!-- About Us Page -->
-    <div id="about-page" class="hidden">
-        <section class="about-section">
-            <h2>About Us</h2>
-            <div class="about-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover;"></div>
-            <div class="about-text">
-                <p>At Bakits, we believe that baking should be joyful, accessible, and delicious. Founded with a passion for bringing people together through the art of cookie making, we've created premium baking kits that take the guesswork out of creating perfect cookies every time.</p>
-                
-                <p>Our journey began in a small kitchen where we perfected each recipe, tested every ingredient blend, and packaged everything with love. Today, we're proud to deliver that same quality and care to your doorstep.</p>
-                
-                <p>Each Bakits box contains carefully measured, premium ingredients and easy-to-follow instructions that guarantee bakery-quality results. Whether you're a seasoned baker or just starting out, our kits make it simple to create memories and share happiness, one cookie at a time.</p>
-                
-                <p>We source our ingredients from trusted suppliers, ensuring that every chocolate chip, every grain of flour, and every spice meets our high standards. Because when you bake with Bakits, you're not just making cookies – you're creating moments of joy.</p>
-                
-                <p class="signature">Bake happiness, make happiness.</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Bakits</h3>
-                <p>Bake happiness, make happiness</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
-                    <li><a href="#" onclick="showPage('recipes'); return false;">Recipes</a></li>
-                    <li><a href="#" onclick="showPage('subscribe'); return false;">Subscribe</a></li>
-                    <li><a href="#" onclick="showPage('about'); return false;">About Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <p>Email: <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a></p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Bakits. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Recipe data
-        const recipes = {
-            'Overnight Chocolate Chipe Cookie': {
-                name: 'Overnight Chocolate Chip Cookie',
-                image: "url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800&q=80') center/cover",
-                difficulty: 'Medium',
-                yield: '24 cookies',
-                time: '35 minutes, 12 hour chilling',
-                description: 'Our Classic Chocolate Chip cookie is a timeless favorite that brings joy to every bite. Made with premium Belgian chocolate chips and real butter, these cookies deliver the perfect balance of crispy edges and chewy centers. The recipe has been perfected over years to ensure that golden-brown exterior and melty chocolate goodness. Whether you\'re baking for a special occasion or just treating yourself, these cookies are guaranteed to become a household staple.',
-                included: [
-                    'Premium all-purpose flour',
-                    'Authentic 70% chocolate chips',
-                    'Pure vanilla extract',
-                    'Rich brown sugar for an extra caramelized flavor',
-                    'QR code with video instruction',
-                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
-                ]
-            },
-            'Mexican Hot Chocolate Cookies': {
-                name: 'Mexican Hot Chocolate Cookies',
-                image: "url('https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?w=800&q=80') center/cover",
-                difficulty: 'Medium',
-                yield: '20 cookies',
-                time: '45 minutes, 2 hour chilling',
-                description: 'A wholesome and hearty cookie that combines rolled oats with plump, juicy raisins. Our Oatmeal Raisin cookies offer a delightful chewiness and natural sweetness that makes them perfect for breakfast or an afternoon snack. Enhanced with a hint of cinnamon and nutmeg, each bite brings warmth and comfort. These cookies are loved by health-conscious bakers who don\'t want to compromise on flavor.',
-                included: [
-                    'Premium cayanne pepper powder',
-                    'Rich organic cinnamon',
-                    'Mini',
-                    'Whole wheat flour blend',
-                    'Nutmeg spice',
-                    'Brown sugar',
-                    'Butter and eggs (you provide)',
-                    'QR code with video instruction',
-                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
-                ]
-            },
-            'Gochujang Caramel Cookies': {
-                name: 'Gochujang Caramel Cookies',
-                image: "url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover",
-                difficulty: 'Easy',
-                yield: '22 cookies',
-                time: '28 minutes, 15 min chilling',
-                description: 'For the true chocolate lover, our Double Chocolate Delight is an indulgent experience. Rich cocoa powder is combined with dark chocolate chunks to create an intensely chocolatey cookie with a fudgy texture. The cookies have a beautiful crackled surface and maintain their soft, decadent interior. Perfect for special occasions or when you need a serious chocolate fix.',
-                included: [
-                    'Gochujang paste - a fermented Korean chili paste with a hit of sweetness',
-                    'Dark brown sugar to deepen the flavor',
-                    'High-quality all-purpose flour',
-                    'Pure vanilla extract',
-                    'QR code with video instruction',
-                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
-                ]
-            },
-            'Cultured Butter Cookies': {
-                name: 'Cultured Butter Cookies',
-                image: "url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=800&q=80') center/cover",
-                difficulty: 'Easy',
-                yield: '26 cookies',
-                time: '22 minutes, 2 hours chilling',
-                description: 'Our Peanut Butter Bliss cookies are a peanut butter lover\'s dream come true. Made with creamy peanut butter and featuring the classic crisscross pattern on top, these cookies deliver rich, nutty flavor in every bite. They have a wonderful tender crumb and that signature peanut butter cookie texture. Simple to make yet incredibly satisfying.',
-                included: [
-                    'Premium creamy peanut butter',
-                    'All-purpose flour',
-                    'Light brown sugar to not overpower the delicateness of the cookie',
-                    'White sugar',
-                    'Pure vanilla extract',
-                    'Baking essentials',
-                    'Eggs and butter (you provide)',
-                    'Classic recipe instructions'
-                ]
-            },
-            'sugar-cookie': {
-                name: 'Classic Sugar Cookie',
-                image: "url('https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=800&q=80') center/cover",
-                difficulty: 'Easy',
-                yield: '30 cookies',
-                time: '20 minutes',
-                description: 'Sometimes simplicity is perfection. Our Classic Sugar Cookies are buttery, tender, and topped with sparkling sugar crystals. These versatile cookies are perfect for any occasion and can be decorated to match any theme. The dough is easy to work with and the cookies hold their shape beautifully, making them ideal for cookie decorating parties or simple everyday treats.',
-                included: [
-                    'Premium cake flour for tenderness',
-                    'Sparkling sugar crystals',
-                    'Pure vanilla extract',
-                    'Almond extract',
-                    'Granulated sugar',
-                    'Optional food coloring',
-                    'Butter and eggs (you provide)',
-                    'Decorating ideas guide'
-                ]
-            },
-            'snickerdoodle': {
-                name: 'Cinnamon Snickerdoodle',
-                image: "url('https://images.unsplash.com/photo-1601000938365-aa3d5a4c6b50?w=800&q=80') center/cover",
-                difficulty: 'Easy',
-                yield: '28 cookies',
-                time: '26 minutes',
-                description: 'Rolled in cinnamon sugar and baked to perfection, our Snickerdoodle cookies are a cozy treat that brings back childhood memories. These cookies have a distinctive tangy flavor from cream of tartar and a wonderful soft, chewy texture. The cinnamon-sugar coating creates a slightly crispy exterior that gives way to a tender center. They\'re the perfect companion to a glass of cold milk or hot cocoa.',
-                included: [
-                    'Ceylon cinnamon (premium quality)',
-                    'Cream of tartar',
-                    'All-purpose flour',
-                    'Cinnamon-sugar coating mix',
-                    'Pure vanilla extract',
-                    'White sugar',
-                    'Butter and eggs (you provide)',
-                    'Tips for perfect texture'
-                ]
-            }
-        };
-
-        // Slideshow functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-
-        setInterval(nextSlide, 4000);
-
-        // Page navigation
-        function showPage(page) {
-            // Hide all pages
-            document.getElementById('home-page').classList.add('hidden');
-            document.getElementById('subscribe-page').classList.add('hidden');
-            document.getElementById('recipes-page').classList.add('hidden');
-            document.getElementById('recipe-detail-page').classList.add('hidden');
-            document.getElementById('subscription-payment-page').classList.add('hidden');
-            document.getElementById('mbway-payment-page').classList.add('hidden');
-            document.getElementById('about-page').classList.add('hidden');
-            
-            // Show selected page
-            switch(page) {
-                case 'home':
-                    document.getElementById('home-page').classList.remove('hidden');
-                    break;
-                case 'subscribe':
-                    document.getElementById('subscribe-page').classList.remove('hidden');
-                    break;
-                case 'recipes':
-                    document.getElementById('recipes-page').classList.remove('hidden');
-                    break;
-                case 'subscription-payment':
-                    document.getElementById('subscription-payment-page').classList.remove('hidden');
-                    break;
-                case 'mbway-payment':
-                    document.getElementById('mbway-payment-page').classList.remove('hidden');
-                    break;
-                case 'about':
-                    document.getElementById('about-page').classList.remove('hidden');
-                    break;
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Show individual recipe
-        function showRecipe(recipeId) {
-            const recipe = recipes[recipeId];
-            
-            // Populate recipe details
-            document.getElementById('detail-image').style.background = recipe.image;
-            document.getElementById('detail-name').textContent = recipe.name;
-            document.getElementById('detail-difficulty').textContent = recipe.difficulty;
-            document.getElementById('detail-yield').textContent = recipe.yield;
-            document.getElementById('detail-time').textContent = recipe.time;
-            document.getElementById('detail-description').textContent = recipe.description;
-            
-            // Populate included items
-            const includedList = document.getElementById('detail-included');
-            includedList.innerHTML = '';
-            recipe.included.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                includedList.appendChild(li);
-            });
-            
-            // Show recipe detail page
-            document.getElementById('home-page').classList.add('hidden');
-            document.getElementById('subscribe-page').classList.add('hidden');
-            document.getElementById('recipes-page').classList.add('hidden');
-            document.getElementById('recipe-detail-page').classList.remove('hidden');
-            document.getElementById('subscription-payment-page').classList.add('hidden');
-            document.getElementById('mbway-payment-page').classList.add('hidden');
-            document.getElementById('about-page').classList.add('hidden');
-            
-            window.scrollTo(0, 0);
-        }
-    </script>
-</body>
-</html>
+    <div id="mbway-payment-page" class="
