@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -62,7 +63,7 @@
 
         .nav-btn {
             padding: 0.7rem 1.5rem;
-            background: #C6A667;
+            background: transparent;
             color: #3B2D27;
             border: none;
             border-radius: 25px;
@@ -75,7 +76,7 @@
         }
 
         .nav-btn:hover {
-            background: #A88D55;
+            background: #E6E1D5;
         }
 
         /* Hero Section */
@@ -111,9 +112,20 @@
             opacity: 1;
         }
 
-        .slide1 { background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1200&q=80') center/cover; }
-        .slide2 { background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200&q=80') center/cover; }
-        .slide3 { background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=1200&q=80') center/cover; }
+        .slide1 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1200&q=80') center/cover; 
+        }
+
+        .slide2 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200&q=80') center/cover; 
+        }
+
+        .slide3 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=1200&q=80') center/cover; 
+        }
 
         .hero-content {
             position: relative;
@@ -516,6 +528,115 @@
             display: none;
         }
 
+        /* About Us Section */
+        .about-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 3rem;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto 3rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            border: 2px solid #E6E1D5;
+            box-shadow: 0 5px 20px rgba(59, 45, 39, 0.1);
+        }
+
+        .about-text {
+            text-align: left;
+            line-height: 1.9;
+        }
+
+        .about-text p {
+            color: #6D5245;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            color: #C6A667;
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #3B2D27;
+            color: #FAF9F6;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #C6A667;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #E6E1D5;
+        }
+
+        .footer-section p {
+            color: #E6E1D5;
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a,
+        .footer-section a {
+            color: #E6E1D5;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover,
+        .footer-section a:hover {
+            color: #C6A667;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #6D5245;
+            color: #8E8579;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -542,8 +663,9 @@
         <div class="nav-container">
             <a href="#" class="logo" onclick="showPage('home'); return false;">Bakits</a>
             <div class="nav-buttons">
-                <button class="nav-btn" onclick="showPage('subscribe')">Subscribe</button>
                 <button class="nav-btn" onclick="showPage('recipes')">Recipes</button>
+                <button class="nav-btn" onclick="showPage('subscribe')">Subscribe</button>
+                <button class="nav-btn" onclick="showPage('about')">About Us</button>
             </div>
         </div>
     </nav>
@@ -742,6 +864,51 @@
         </div>
     </div>
 
+    <!-- About Us Page -->
+    <div id="about-page" class="hidden">
+        <section class="about-section">
+            <h2>About Us</h2>
+            <div class="about-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover;"></div>
+            <div class="about-text">
+                <p>At Bakits, we believe that baking should be joyful, accessible, and delicious. Founded with a passion for bringing people together through the art of cookie making, we've created premium baking kits that take the guesswork out of creating perfect cookies every time.</p>
+                
+                <p>Our journey began in a small kitchen where we perfected each recipe, tested every ingredient blend, and packaged everything with love. Today, we're proud to deliver that same quality and care to your doorstep.</p>
+                
+                <p>Each Bakits box contains carefully measured, premium ingredients and easy-to-follow instructions that guarantee bakery-quality results. Whether you're a seasoned baker or just starting out, our kits make it simple to create memories and share happiness, one cookie at a time.</p>
+                
+                <p>We source our ingredients from trusted suppliers, ensuring that every chocolate chip, every grain of flour, and every spice meets our high standards. Because when you bake with Bakits, you're not just making cookies – you're creating moments of joy.</p>
+                
+                <p class="signature">Bake happiness, make happiness.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bakits</h3>
+                <p>Bake happiness, make happiness</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="showPage('recipes'); return false;">Recipes</a></li>
+                    <li><a href="#" onclick="showPage('subscribe'); return false;">Subscribe</a></li>
+                    <li><a href="#" onclick="showPage('about'); return false;">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bakits. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
         // Recipe data
         const recipes = {
@@ -857,13 +1024,13 @@
         // Slideshow functionality
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        
+
         function nextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-        
+
         setInterval(nextSlide, 4000);
 
         // Page navigation
@@ -875,6 +1042,7 @@
             document.getElementById('recipe-detail-page').classList.add('hidden');
             document.getElementById('subscription-payment-page').classList.add('hidden');
             document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
             
             // Show selected page
             switch(page) {
@@ -892,6 +1060,9 @@
                     break;
                 case 'mbway-payment':
                     document.getElementById('mbway-payment-page').classList.remove('hidden');
+                    break;
+                case 'about':
+                    document.getElementById('about-page').classList.remove('hidden');
                     break;
             }
             
@@ -927,6 +1098,7 @@
             document.getElementById('recipe-detail-page').classList.remove('hidden');
             document.getElementById('subscription-payment-page').classList.add('hidden');
             document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
             
             window.scrollTo(0, 0);
         }
