@@ -28,6 +28,7 @@
             letter-spacing: 1px;
         }
 
+        /* Sticky Navigation */
         nav {
             position: sticky;
             top: 0;
@@ -53,7 +54,6 @@
             text-decoration: none;
             font-family: 'Playfair Display', serif;
             letter-spacing: 2px;
-            cursor: pointer;
         }
 
         .nav-buttons {
@@ -71,6 +71,7 @@
             font-size: 1rem;
             font-weight: 500;
             transition: background 0.3s;
+            text-decoration: none;
             font-family: 'Inter', sans-serif;
         }
 
@@ -78,6 +79,7 @@
             background: #E6E1D5;
         }
 
+        /* Hero Section */
         .hero {
             position: relative;
             height: 600px;
@@ -150,6 +152,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
             font-family: 'Inter', sans-serif;
         }
 
@@ -159,6 +163,7 @@
             box-shadow: 0 5px 15px rgba(198, 166, 103, 0.4);
         }
 
+        /* Instructions Section */
         .instructions {
             max-width: 1200px;
             margin: 4rem auto;
@@ -209,6 +214,7 @@
             color: #6D5245;
         }
 
+        /* Subscription Section */
         .subscription {
             max-width: 1200px;
             margin: 4rem auto;
@@ -284,6 +290,7 @@
             background: #A88D55;
         }
 
+        /* Recipe Grid */
         .recipes {
             max-width: 1200px;
             margin: 4rem auto;
@@ -358,6 +365,7 @@
             background: #213628;
         }
 
+        /* Individual Recipe Page */
         .recipe-detail {
             max-width: 1200px;
             margin: 2rem auto;
@@ -463,6 +471,7 @@
             font-weight: bold;
         }
 
+        /* Payment Pages */
         .payment-page {
             max-width: 800px;
             margin: 4rem auto;
@@ -506,6 +515,8 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
             font-family: 'Inter', sans-serif;
         }
 
@@ -517,6 +528,7 @@
             display: none;
         }
 
+        /* About Us Section */
         .about-section {
             max-width: 900px;
             margin: 4rem auto;
@@ -562,6 +574,7 @@
             font-weight: 400;
         }
 
+        /* Footer */
         .footer {
             background-color: #3B2D27;
             color: #FAF9F6;
@@ -609,7 +622,6 @@
             color: #E6E1D5;
             text-decoration: none;
             transition: color 0.3s;
-            cursor: pointer;
         }
 
         .footer-section ul li a:hover,
@@ -624,6 +636,7 @@
             color: #8E8579;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -645,9 +658,10 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a class="logo" onclick="showPage('home')">Bakits</a>
+            <a href="#" class="logo" onclick="showPage('home'); return false;">Bakits</a>
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="showPage('recipes')">Recipes</button>
                 <button class="nav-btn" onclick="showPage('subscribe')">Subscribe</button>
@@ -656,7 +670,9 @@
         </div>
     </nav>
 
+    <!-- Home Page -->
     <div id="home-page">
+        <!-- Hero Section -->
         <section class="hero">
             <div class="slideshow">
                 <div class="slide slide1 active"></div>
@@ -665,10 +681,11 @@
             </div>
             <div class="hero-content">
                 <h1>Bake Happiness, Make Happiness</h1>
-                <button class="hero-btn" onclick="showPage('subscribe')">Subscribe Now</button>
+                <a href="#" class="hero-btn" onclick="showPage('subscribe')">Subscribe Now</a>
             </div>
         </section>
 
+        <!-- Instructions Section -->
         <section class="instructions">
             <h2>How It Works</h2>
             <div class="steps">
@@ -691,6 +708,7 @@
         </section>
     </div>
 
+    <!-- Subscribe Page -->
     <div id="subscribe-page" class="hidden">
         <section class="subscription">
             <h2>Choose Your Subscription</h2>
@@ -732,39 +750,40 @@
         </section>
     </div>
 
+    <!-- Recipes Page -->
     <div id="recipes-page" class="hidden">
         <section class="recipes">
             <h2>Our Cookie Recipes</h2>
             <div class="recipe-grid">
-                <div class="recipe-card" onclick="showRecipe('Overnight Chocolate Chip Cookie')">
+                <div class="recipe-card" onclick="showRecipe('chocolate-chip')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Overnight Chocolate Chip Cookies</h3>
+                        <h3>Overnight Chocolate Chip Cookie</h3>
                         <p class="recipe-time">⏱️ 35 minutes, 🧊 12 hours</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('Mexican Hot Chocolate Cookies')">
+                <div class="recipe-card" onclick="showRecipe('oatmeal-raisin')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Mexican Hot Chocolate Cookies</h3>
-                        <p class="recipe-time">⏱️ 30 minutes, 🧊 2 hours</p>
+                        <h3>Oatmeal Raisin</h3>
+                        <p class="recipe-time">⏱️ 30 minutes</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('Gochujang Caramel Cookies')">
+                <div class="recipe-card" onclick="showRecipe('double-chocolate')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Gochujang Caramel Cookies</h3>
-                        <p class="recipe-time">⏱️ 28 minutes, 🧊 30 minutes</p>
+                        <h3>Double Chocolate Delight</h3>
+                        <p class="recipe-time">⏱️ 28 minutes</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
-                <div class="recipe-card" onclick="showRecipe('Cultured Butter Cookies')">
+                <div class="recipe-card" onclick="showRecipe('peanut-butter')">
                     <div class="recipe-image" style="background: url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=600&q=80') center/cover;"></div>
                     <div class="recipe-info">
-                        <h3>Cultured Butter Cookies</h3>
-                        <p class="recipe-time">⏱️ 22 minutes, 🧊 2 hours</p>
+                        <h3>Peanut Butter Bliss</h3>
+                        <p class="recipe-time">⏱️ 22 minutes</p>
                         <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
                     </div>
                 </div>
@@ -788,6 +807,7 @@
         </section>
     </div>
 
+    <!-- Individual Recipe Pages -->
     <div id="recipe-detail-page" class="hidden">
         <section class="recipe-detail">
             <div class="recipe-header">
@@ -823,23 +843,264 @@
         </section>
     </div>
 
+    <!-- Subscription Payment Page -->
     <div id="subscription-payment-page" class="hidden">
         <div class="payment-page">
             <h1>Complete Your Subscription</h1>
             <p>To pay for your subscription, please contact us at:</p>
             <p><a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a></p>
             <p>We'll get back to you shortly with payment instructions!</p>
-            <button class="back-btn" onclick="showPage('subscribe')">Back to Subscriptions</button>
+            <a href="#" class="back-btn" onclick="showPage('subscribe')">Back to Subscriptions</a>
         </div>
     </div>
 
+    <!-- Mbway Payment Page -->
     <div id="mbway-payment-page" class="hidden">
         <div class="payment-page">
             <h1>Payment Method</h1>
             <p>We accept payment via <strong>Mbway</strong></p>
             <p>Please contact us at <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a> to complete your purchase with Mbway payment.</p>
-            <button class="back-btn" onclick="showPage('recipes')">Back to Recipes</button>
+            <a href="#" class="back-btn" onclick="showPage('recipes')">Back to Recipes</a>
         </div>
     </div>
 
-    <div id="about
+    <!-- About Us Page -->
+    <div id="about-page" class="hidden">
+        <section class="about-section">
+            <h2>About Us</h2>
+            <div class="about-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover;"></div>
+            <div class="about-text">
+                <p>At Bakits, we believe that baking should be joyful, accessible, and delicious. Founded with a passion for bringing people together through the art of cookie making, we've created premium baking kits that take the guesswork out of creating perfect cookies every time.</p>
+                
+                <p>Our journey began in a small kitchen where we perfected each recipe, tested every ingredient blend, and packaged everything with love. Today, we're proud to deliver that same quality and care to your doorstep.</p>
+                
+                <p>Each Bakits box contains carefully measured, premium ingredients and easy-to-follow instructions that guarantee bakery-quality results. Whether you're a seasoned baker or just starting out, our kits make it simple to create memories and share happiness, one cookie at a time.</p>
+                
+                <p>We source our ingredients from trusted suppliers, ensuring that every chocolate chip, every grain of flour, and every spice meets our high standards. Because when you bake with Bakits, you're not just making cookies – you're creating moments of joy.</p>
+                
+                <p class="signature">Bake happiness, make happiness.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bakits</h3>
+                <p>Bake happiness, make happiness</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="showPage('recipes'); return false;">Recipes</a></li>
+                    <li><a href="#" onclick="showPage('subscribe'); return false;">Subscribe</a></li>
+                    <li><a href="#" onclick="showPage('about'); return false;">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:customersupport.Bakits@gmail.com">customersupport.Bakits@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bakits. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Recipe data
+        const recipes = {
+            'chocolate-chip': {
+                name: 'Overnight Chocolate Chip Cookie',
+                image: "url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=800&q=80') center/cover",
+                difficulty: 'Easy',
+                yield: '24 cookies',
+                time: '35 minutes, 12 hour chilling',
+                description: 'Our Classic Chocolate Chip cookie is a timeless favorite that brings joy to every bite. Made with premium Belgian chocolate chips and real butter, these cookies deliver the perfect balance of crispy edges and chewy centers. The recipe has been perfected over years to ensure that golden-brown exterior and melty chocolate goodness. Whether you\'re baking for a special occasion or just treating yourself, these cookies are guaranteed to become a household staple.',
+                included: [
+                    'Premium all-purpose flour',
+                    'Authentic 70% chocolate chips',
+                    'Pure vanilla extract',
+                    'Rich brown sugar for an extra caramelized flavor',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'oatmeal-raisin': {
+                name: 'Mexican Hot Chocolate Cookies',
+                image: "url('https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?w=800&q=80') center/cover",
+                difficulty: 'Medium',
+                yield: '20 cookies',
+                time: '45 minutes, 2 hour chilling',
+                description: 'A wholesome and hearty cookie that combines rolled oats with plump, juicy raisins. Our Oatmeal Raisin cookies offer a delightful chewiness and natural sweetness that makes them perfect for breakfast or an afternoon snack. Enhanced with a hint of cinnamon and nutmeg, each bite brings warmth and comfort. These cookies are loved by health-conscious bakers who don\'t want to compromise on flavor.',
+                included: [
+                    'Premium rolled oats',
+                    'Sun-dried California raisins',
+                    'Organic cinnamon',
+                    'Whole wheat flour blend',
+                    'Nutmeg spice',
+                    'Brown sugar',
+                    'Butter and eggs (you provide)',
+                    'Detailed baking instructions'
+                ]
+            },
+            'double-chocolate': {
+                name: 'Double Chocolate Delight',
+                image: "url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover",
+                difficulty: 'Medium',
+                yield: '22 cookies',
+                time: '28 minutes',
+                description: 'For the true chocolate lover, our Double Chocolate Delight is an indulgent experience. Rich cocoa powder is combined with dark chocolate chunks to create an intensely chocolatey cookie with a fudgy texture. The cookies have a beautiful crackled surface and maintain their soft, decadent interior. Perfect for special occasions or when you need a serious chocolate fix.',
+                included: [
+                    'Premium Dutch-process cocoa',
+                    'Dark chocolate chunks (70% cacao)',
+                    'High-quality all-purpose flour',
+                    'Espresso powder for depth',
+                    'Pure vanilla extract',
+                    'Sugar blend',
+                    'Butter and eggs (you provide)',
+                    'Professional baking tips'
+                ]
+            },
+            'peanut-butter': {
+                name: 'Peanut Butter Bliss',
+                image: "url('https://images.unsplash.com/photo-1590080876799-33b7d5665a85?w=800&q=80') center/cover",
+                difficulty: 'Easy',
+                yield: '26 cookies',
+                time: '22 minutes',
+                description: 'Our Peanut Butter Bliss cookies are a peanut butter lover\'s dream come true. Made with creamy peanut butter and featuring the classic crisscross pattern on top, these cookies deliver rich, nutty flavor in every bite. They have a wonderful tender crumb and that signature peanut butter cookie texture. Simple to make yet incredibly satisfying.',
+                included: [
+                    'Premium creamy peanut butter',
+                    'All-purpose flour',
+                    'Brown sugar',
+                    'White sugar',
+                    'Pure vanilla extract',
+                    'Baking essentials',
+                    'Eggs and butter (you provide)',
+                    'Classic recipe instructions'
+                ]
+            },
+            'sugar-cookie': {
+                name: 'Classic Sugar Cookie',
+                image: "url('https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=800&q=80') center/cover",
+                difficulty: 'Easy',
+                yield: '30 cookies',
+                time: '20 minutes',
+                description: 'Sometimes simplicity is perfection. Our Classic Sugar Cookies are buttery, tender, and topped with sparkling sugar crystals. These versatile cookies are perfect for any occasion and can be decorated to match any theme. The dough is easy to work with and the cookies hold their shape beautifully, making them ideal for cookie decorating parties or simple everyday treats.',
+                included: [
+                    'Premium cake flour for tenderness',
+                    'Sparkling sugar crystals',
+                    'Pure vanilla extract',
+                    'Almond extract',
+                    'Granulated sugar',
+                    'Optional food coloring',
+                    'Butter and eggs (you provide)',
+                    'Decorating ideas guide'
+                ]
+            },
+            'snickerdoodle': {
+                name: 'Cinnamon Snickerdoodle',
+                image: "url('https://images.unsplash.com/photo-1601000938365-aa3d5a4c6b50?w=800&q=80') center/cover",
+                difficulty: 'Easy',
+                yield: '28 cookies',
+                time: '26 minutes',
+                description: 'Rolled in cinnamon sugar and baked to perfection, our Snickerdoodle cookies are a cozy treat that brings back childhood memories. These cookies have a distinctive tangy flavor from cream of tartar and a wonderful soft, chewy texture. The cinnamon-sugar coating creates a slightly crispy exterior that gives way to a tender center. They\'re the perfect companion to a glass of cold milk or hot cocoa.',
+                included: [
+                    'Ceylon cinnamon (premium quality)',
+                    'Cream of tartar',
+                    'All-purpose flour',
+                    'Cinnamon-sugar coating mix',
+                    'Pure vanilla extract',
+                    'White sugar',
+                    'Butter and eggs (you provide)',
+                    'Tips for perfect texture'
+                ]
+            }
+        };
+
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 4000);
+
+        // Page navigation
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.add('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
+            
+            // Show selected page
+            switch(page) {
+                case 'home':
+                    document.getElementById('home-page').classList.remove('hidden');
+                    break;
+                case 'subscribe':
+                    document.getElementById('subscribe-page').classList.remove('hidden');
+                    break;
+                case 'recipes':
+                    document.getElementById('recipes-page').classList.remove('hidden');
+                    break;
+                case 'subscription-payment':
+                    document.getElementById('subscription-payment-page').classList.remove('hidden');
+                    break;
+                case 'mbway-payment':
+                    document.getElementById('mbway-payment-page').classList.remove('hidden');
+                    break;
+                case 'about':
+                    document.getElementById('about-page').classList.remove('hidden');
+                    break;
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show individual recipe
+        function showRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            
+            // Populate recipe details
+            document.getElementById('detail-image').style.background = recipe.image;
+            document.getElementById('detail-name').textContent = recipe.name;
+            document.getElementById('detail-difficulty').textContent = recipe.difficulty;
+            document.getElementById('detail-yield').textContent = recipe.yield;
+            document.getElementById('detail-time').textContent = recipe.time;
+            document.getElementById('detail-description').textContent = recipe.description;
+            
+            // Populate included items
+            const includedList = document.getElementById('detail-included');
+            includedList.innerHTML = '';
+            recipe.included.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                includedList.appendChild(li);
+            });
+            
+            // Show recipe detail page
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.remove('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
