@@ -864,7 +864,7 @@
             <p>To pay for your subscription, please contact us at:</p>
             <p><a href="mailto:bakits.pt@gmail.com">bakits.pt@gmail.com</a></p>
             <p>We'll get back to you shortly with payment instructions!</p>
-            <button class="back-btn" onclick="showPage('subscribe')">Back to Subscriptions</button>
+            <button class="back-btn" onclick="sendSubscriptionEmail()">Send Inquiry Email</button>
         </div>
     </div>
 
@@ -874,7 +874,7 @@
             <h1>Payment Method</h1>
             <p>We accept payment via <strong>Mbway</strong></p>
             <p>Please contact us at <a href="mailto:bakits.pt@gmail.com">bakits.pt@gmail.com</a> to complete your purchase with Mbway payment.</p>
-            <a href="#" class="back-btn" onclick="showPage('recipes')">Back to Recipes</a>
+            <button class="back-btn" onclick="sendRecipeEmail()">Send Purchase Email</button>
         </div>
     </div>
 
@@ -1101,6 +1101,40 @@
             
             window.scrollTo(0, 0);
         }
+    // Email functions
+    function sendSubscriptionEmail() {
+        const subject = encodeURIComponent("Subscription Inquiry - Bakits");
+        const body = encodeURIComponent(
+            "Hello Bakits Team,\n\n" +
+            "I am interested in subscribing to your cookie kit service.\n\n" +
+            "Please provide me with:\n" +
+            "- Payment instructions for Mbway\n" +
+            "- Details about the subscription plan I selected\n" +
+            "- Any additional information needed to complete my subscription\n\n" +
+            "Thank you!\n\n" +
+            "Best regards"
+        );
+        
+        window.location.href = `mailto:bakits.pt@gmail.com?subject=${subject}&body=${body}`;
+    }
+    
+    function sendRecipeEmail() {
+        const subject = encodeURIComponent("Recipe Kit Purchase - Bakits");
+        const body = encodeURIComponent(
+            "Hello Bakits Team,\n\n" +
+            "I would like to purchase a cookie recipe kit.\n\n" +
+            "Recipe: [Please specify which recipe you're interested in]\n\n" +
+            "Please provide me with:\n" +
+            "- Payment instructions for Mbway\n" +
+            "- Total cost including shipping\n" +
+            "- Estimated delivery time\n\n" +
+            "Thank you!\n\n" +
+            "Best regards"
+        );
+        
+        window.location.href = `mailto:bakits.pt@gmail.com?subject=${subject}&body=${body}`;
+    }
+        
     </script>
 </body>
 </html>
