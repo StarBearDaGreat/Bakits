@@ -1,989 +1,1140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Ratings</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0f0e0d;
-      --surface: #1a1917;
-      --surface2: #242220;
-      --border: rgba(255,255,255,0.08);
-      --border-hover: rgba(255,255,255,0.16);
-      --text: #f0ede8;
-      --text-muted: #888580;
-      --text-dim: #555250;
-      --accent: #e8b84b;
-      --accent-dim: rgba(232,184,75,0.12);
-      --accent-border: rgba(232,184,75,0.3);
-      --accent-text: #c9962a;
-      --radius: 12px;
-      --radius-sm: 8px;
-    }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      padding: 1.25rem 1rem 0;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 10;
-      border-bottom: 0.5px solid var(--border);
-    }
-
-    .nav-tab {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px 20px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-tab:hover { color: var(--text); }
-    .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-    .page { display: none; padding: 2rem 1rem 4rem; }
-    .page.active { display: block; }
-
-    .container { max-width: 680px; margin: 0 auto; }
-
-    .page-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-top: 0.5rem;
-    }
-
-    .page-header h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.4rem;
-      font-weight: 400;
-      letter-spacing: -0.5px;
-      line-height: 1.1;
-    }
-
-    .page-header h1 span { color: var(--accent); }
-
-    .page-header p {
-      margin-top: 0.4rem;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .card {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .card-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .form-group { display: flex; flex-direction: column; gap: 7px; }
-    .form-group.full { grid-column: 1 / -1; }
-
-    label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
-
-    input[type="text"],
-    input[type="date"],
-    textarea {
-      width: 100%;
-      background: var(--surface2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      padding: 10px 12px;
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    input[type="text"]:focus,
-    input[type="date"]:focus,
-    textarea:focus { border-color: var(--border-hover); }
-
-    input[type="text"]::placeholder,
-    textarea::placeholder { color: var(--text-dim); }
-
-    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.5); cursor: pointer; }
-
-    textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
-
-    .char-row { display: flex; justify-content: flex-end; }
-    .char-count { font-size: 11px; color: var(--text-dim); transition: color 0.15s; }
-    .char-count.warn { color: var(--accent-text); }
-
-    .rating-row { display: flex; align-items: center; gap: 14px; }
-
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      flex: 1;
-      height: 4px;
-      background: var(--surface2);
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: none;
-    }
-
-    input[type="range"]::-moz-range-thumb {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: none;
-    }
-
-    .rating-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px;
-      color: var(--accent);
-      min-width: 46px;
-      text-align: right;
-    }
-
-    .stars-preview {
-      font-size: 18px;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-top: 6px;
-    }
-
-    .movie-search-wrap { position: relative; }
-
-    .movie-dropdown {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0; right: 0;
-      background: var(--surface);
-      border: 0.5px solid var(--border-hover);
-      border-radius: var(--radius-sm);
-      max-height: 220px;
-      overflow-y: auto;
-      z-index: 50;
-      display: none;
-    }
-
-    .movie-dropdown.open { display: block; }
-
-    .movie-option {
-      padding: 9px 14px;
-      font-size: 14px;
-      color: var(--text);
-      cursor: pointer;
-      transition: background 0.1s;
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .movie-option:hover, .movie-option.hl { background: var(--surface2); }
-
-    .opt-year { font-size: 12px; color: var(--text-dim); }
-    .opt-genre { font-size: 11px; color: var(--text-muted); margin-left: auto; }
-
-    .selected-pill {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-dim);
-      border: 0.5px solid var(--accent-border);
-      border-radius: var(--radius-sm);
-      padding: 8px 12px;
-      font-size: 14px;
-      color: var(--accent);
-      margin-top: 6px;
-    }
-
-    .selected-pill.on { display: flex; }
-
-    .pill-clear {
-      margin-left: auto;
-      background: none;
-      border: none;
-      color: var(--accent-text);
-      cursor: pointer;
-      font-size: 16px;
-      line-height: 1;
-      padding: 0 2px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      margin-top: 6px;
-      padding: 11px;
-      background: var(--accent);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: #0f0e0d;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-    }
-
-    .submit-btn:hover { opacity: 0.9; }
-    .submit-btn:active { transform: scale(0.98); opacity: 0.85; }
-
-    .list-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .list-header-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .sort-row { display: flex; align-items: center; gap: 8px; }
-    .sort-row label { font-size: 12px; color: var(--text-dim); }
-
-    select {
-      background: var(--surface2);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      padding: 6px 10px;
-      outline: none;
-      cursor: pointer;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    .count-tag { font-size: 12px; color: var(--text-dim); }
-
-    .ratings-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .rating-card {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      transition: border-color 0.15s;
-    }
-
-    .rating-card:hover { border-color: var(--border-hover); }
-
-    .rc-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .rc-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 17px;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.3;
-    }
-
-    .rc-title-year {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-left: 5px;
-    }
-
-    .rc-score {
-      background: var(--accent-dim);
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 99px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .rc-meta {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 12px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-    }
-
-    .rc-stars { font-size: 12px; letter-spacing: 1px; color: var(--accent); }
-
-    .rc-genre {
-      font-size: 11px;
-      color: var(--text-dim);
-      background: var(--surface2);
-      padding: 2px 8px;
-      border-radius: 99px;
-    }
-
-    .rc-comment {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 0.5px solid var(--border);
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      font-style: italic;
-    }
-
-    /* MOVIES PAGE */
-    .movies-toolbar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .search-box {
-      flex: 1;
-      min-width: 180px;
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      padding: 9px 12px;
-      outline: none;
-      transition: border-color 0.15s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    .search-box:focus { border-color: var(--border-hover); }
-    .search-box::placeholder { color: var(--text-dim); }
-
-    .movies-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-      gap: 10px;
-    }
-
-    .movie-tile {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 0.9rem;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .movie-tile:hover {
-      border-color: var(--border-hover);
-      background: var(--surface2);
-    }
-
-    .tile-genre {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .tile-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.3;
-    }
-
-    .tile-year { font-size: 12px; color: var(--text-dim); }
-
-    .tile-avg {
-      margin-top: auto;
-      padding-top: 8px;
-      font-size: 12px;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .tile-avg-num { font-weight: 500; }
-
-    .tile-no-ratings {
-      margin-top: auto;
-      padding-top: 8px;
-      font-size: 11px;
-      color: var(--text-dim);
-    }
-
-    .rate-btn {
-      margin-top: 6px;
-      width: 100%;
-      padding: 6px;
-      background: none;
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-
-    .rate-btn:hover {
-      background: var(--accent-dim);
-      border-color: var(--accent-border);
-      color: var(--accent);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--text-dim);
-      font-size: 14px;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(8px);
-      background: var(--surface);
-      border: 0.5px solid var(--border-hover);
-      border-radius: var(--radius-sm);
-      padding: 10px 20px;
-      font-size: 13px;
-      color: var(--text);
-      opacity: 0;
-      transition: opacity 0.25s, transform 0.25s;
-      pointer-events: none;
-      z-index: 100;
-    }
-
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    @media (max-width: 480px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: 1; }
-      .page-header h1 { font-size: 2rem; }
-      .movies-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakits - Bake Happiness, Make Happiness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #3B2D27;
+            background-color: #FAF9F6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: #FAF9F6;
+            box-shadow: 0 2px 10px rgba(59, 45, 39, 0.08);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #E6E1D5;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #3B2D27;
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            background: transparent;
+            color: #3B2D27;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-btn:hover {
+            background: #E6E1D5;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .slideshow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide1 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2020/12/07/dining/cs-pistachio-pinwheels/merlin_180932526_f83d4853-083b-4b02-947d-dfa06b746508-mediumSquareAt3X.jpg') center/cover; 
+        }
+
+        .slide2 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek6-hotchoc-fktb/29cookieweek6-hotchoc-fktb-videoSixteenByNineJumbo1600.jpg') center/cover; 
+        }
+
+        .slide3 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2025/09/25/multimedia/29summer100rex5-cookies-qmkc/29summer100rex5-cookies-qmkc-jumbo-v2.jpg') center/cover; 
+        }
+        .slide4 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2022/02/12/dining/JT-Chocolate-Chip-Cookies/JT-Chocolate-Chip-Cookies-mediumSquareAt3X.jpg') center/cover;
+               }
+         .slide5 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek1-matcha-tpzw/29cookieweek1-matcha-tpzw-mediumSquareAt3X.jpg') center/cover; 
+   }
+         .slide6 { 
+            background: linear-gradient(rgba(59, 45, 39, 0.4), rgba(59, 45, 39, 0.4)), 
+                        url('https://static01.nyt.com/images/2013/10/09/dining/09APPE2/09JPAPPE1-superJumbo.jpg') center/cover; 
+                }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: #FAF9F6;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .hero-btn {
+            padding: 1rem 2.5rem;
+            background: #C6A667;
+            color: #3B2D27;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-btn:hover {
+            background: #A88D55;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(198, 166, 103, 0.4);
+        }
+
+        /* Instructions Section */
+        .instructions {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+            background-color: #E6E1D5;
+        }
+
+        .instructions h2 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            padding: 2rem;
+            background: #FAF9F6;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(59, 45, 39, 0.08);
+            border: 1px solid #8E8579;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            color: #C6A667;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3B2D27;
+        }
+
+        .step p {
+            color: #6D5245;
+        }
+
+        /* Subscription Section */
+        .subscription {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .subscription h2 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .subscription-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .subscription-card {
+            background: #FAF9F6;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(59, 45, 39, 0.08);
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #E6E1D5;
+        }
+
+        .subscription-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .subscription-card h3 {
+            font-size: 1.8rem;
+            color: #3B2D27;
+            margin-bottom: 1rem;
+        }
+
+        .subscription-card p {
+            color: #6D5245;
+            margin-bottom: 1rem;
+        }
+
+        .subscription-card ul {
+            color: #6D5245;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: #C6A667;
+            font-weight: bold;
+            margin: 1rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .subscribe-btn {
+            padding: 0.8rem 2rem;
+            background: #C6A667;
+            color: #3B2D27;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .subscribe-btn:hover {
+            background: #A88D55;
+        }
+
+        /* Recipe Grid */
+        .recipes {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: #E6E1D5;
+        }
+
+        .recipes h2 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: #FAF9F6;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(59, 45, 39, 0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid #8E8579;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .recipe-info {
+            padding: 1.5rem;
+        }
+
+        .recipe-info h3 {
+            font-size: 1.5rem;
+            color: #3B2D27;
+            margin-bottom: 0.5rem;
+        }
+
+        .recipe-time {
+            color: #6D5245;
+            margin-bottom: 1rem;
+        }
+
+        .buy-now-btn {
+            padding: 0.7rem 1.5rem;
+            background: #2F4B3A;
+            color: #FAF9F6;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .buy-now-btn:hover {
+            background: #213628;
+        }
+
+        /* Individual Recipe Page */
+        .recipe-detail {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .recipe-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .recipe-detail-image {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto 2rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            border: 2px solid #E6E1D5;
+        }
+
+        .recipe-detail h1 {
+            font-size: 3rem;
+            color: #3B2D27;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            color: #8E8579;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3B2D27;
+        }
+
+        .recipe-content {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            background: #FAF9F6;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(59, 45, 39, 0.08);
+        }
+
+        .divider {
+            background: #E6E1D5;
+        }
+
+        .recipe-description, .recipe-included {
+            padding: 1rem;
+        }
+
+        .recipe-description h2, .recipe-included h2 {
+            font-size: 1.8rem;
+            color: #3B2D27;
+            margin-bottom: 1rem;
+        }
+
+        .recipe-description p, .recipe-included p {
+            color: #6D5245;
+            line-height: 1.8;
+        }
+
+        .recipe-included ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recipe-included li {
+            padding: 0.5rem 0;
+            color: #6D5245;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .recipe-included li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2F4B3A;
+            font-weight: bold;
+        }
+
+        /* Payment Pages */
+        .payment-page {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            text-align: center;
+            background: #FAF9F6;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(59, 45, 39, 0.08);
+            border: 1px solid #E6E1D5;
+        }
+
+        .payment-page h1 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 2rem;
+        }
+
+        .payment-page p {
+            font-size: 1.2rem;
+            color: #6D5245;
+            line-height: 1.8;
+        }
+
+        .payment-page a {
+            color: #C6A667;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .payment-page a:hover {
+            color: #A88D55;
+        }
+
+        .back-btn {
+            margin-top: 2rem;
+            padding: 0.8rem 2rem;
+            background: #C6A667;
+            color: #3B2D27;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .back-btn:hover {
+            background: #A88D55;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* About Us Section */
+        .about-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            color: #3B2D27;
+            margin-bottom: 3rem;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto 3rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            border: 2px solid #E6E1D5;
+            box-shadow: 0 5px 20px rgba(59, 45, 39, 0.1);
+        }
+
+        .about-text {
+            text-align: left;
+            line-height: 1.9;
+        }
+
+        .about-text p {
+            color: #6D5245;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            color: #C6A667;
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 400;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #3B2D27;
+            color: #FAF9F6;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #C6A667;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #E6E1D5;
+        }
+
+        .footer-section p {
+            color: #E6E1D5;
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a,
+        .footer-section a {
+            color: #E6E1D5;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover,
+        .footer-section a:hover {
+            color: #C6A667;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #6D5245;
+            color: #8E8579;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .recipe-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .divider {
+                display: none;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <nav>
-    <button class="nav-tab active" onclick="showPage('rate')">Rate a movie</button>
-    <button class="nav-tab" onclick="showPage('movies')">Browse movies</button>
-    <button class="nav-tab" onclick="showPage('ratings')">All ratings</button>
-  </nav>
-
-  <!-- PAGE: RATE -->
-  <div class="page active" id="page-rate">
-    <div class="container">
-      <div class="page-header">
-        <h1>Rate a <span>Movie</span></h1>
-        <p>Select a film and share your take.</p>
-      </div>
-
-      <div class="card">
-        <p class="card-title">Add a rating</p>
-        <div class="form-grid">
-
-          <div class="form-group full">
-            <label>Movie</label>
-            <div class="movie-search-wrap">
-              <input type="text" id="movieSearch"
-                placeholder="Search for a film…"
-                autocomplete="off"
-                oninput="onMovieSearch()"
-                onkeydown="onMovieKey(event)"
-                onfocus="openDd()" />
-              <div class="movie-dropdown" id="movieDd"></div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home'); return false;">Bakits</a>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showPage('recipes')">Recipes</button>
+                <button class="nav-btn" onclick="showPage('subscribe')">Subscribe</button>
+                <button class="nav-btn" onclick="showPage('about')">About Us</button>
             </div>
-            <div class="selected-pill" id="selPill">
-              <span id="pillText"></span>
-              <button class="pill-clear" onclick="clearMovie()">✕</button>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="userName">Your name</label>
-            <input type="text" id="userName" placeholder="e.g. Alex" />
-          </div>
-
-          <div class="form-group">
-            <label for="dateWatched">Date watched</label>
-            <input type="date" id="dateWatched" />
-          </div>
-
-          <div class="form-group full">
-            <label>Rating (out of 10)</label>
-            <div class="rating-row">
-              <input type="range" min="0" max="10" step="0.1" value="7" id="ratingSlider" oninput="updateRating(this.value)" />
-              <span class="rating-num" id="ratingDisplay">7.0</span>
-            </div>
-            <div class="stars-preview" id="starDisplay"></div>
-          </div>
-
-          <div class="form-group full">
-            <label for="commentInput">Comment <span style="font-weight:400;color:var(--text-dim);">— optional</span></label>
-            <textarea id="commentInput" placeholder="What did you think?" maxlength="200" oninput="updateCharCount()"></textarea>
-            <div class="char-row">
-              <span class="char-count" id="charCount">0 / 200</span>
-            </div>
-          </div>
-
         </div>
-        <button class="submit-btn" onclick="submitRating()">Save rating</button>
-      </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="slideshow">
+                <div class="slide slide1 active"></div>
+                <div class="slide slide2"></div>
+                <div class="slide slide3"></div>
+                <div class="slide slide4"></div>
+                <div class="slide slide5"></div>
+                <div class="slide slide6"></div>
+            </div>
+            <div class="hero-content">
+                <h1>Make Happiness, Bake Happiness</h1>
+                <a href="#" class="hero-btn" onclick="showPage('subscribe')">Subscribe Now</a>
+            </div>
+        </section>
+
+        <!-- Instructions Section -->
+        <section class="instructions">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Subscribe</h3>
+                    <p>Choose your perfect subscription plan and wait to get premium cookie kits delivered to your door</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Bake the Cookies</h3>
+                    <p>Using our premium ingredients, follow our perfected recipe to create joy and happiness in your very own kitchen</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Enjoy Your Delicious Treats!</h3>
+                    <p>Share your creations with loved ones or savor them yourself - happiness guaranteed!</p>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
 
-  <!-- PAGE: MOVIES -->
-  <div class="page" id="page-movies">
-    <div class="container">
-      <div class="page-header">
-        <h1>Browse <span>Films</span></h1>
-        <p>100 popular movies — tap any tile to rate it.</p>
-      </div>
-      <div class="movies-toolbar">
-        <input class="search-box" type="text" id="tileSearch" placeholder="Search movies…" oninput="renderTiles()" />
-        <select id="genreFilter" onchange="renderTiles()">
-          <option value="">All genres</option>
-        </select>
-      </div>
-      <div class="movies-grid" id="moviesGrid"></div>
+    <!-- Subscribe Page -->
+    <div id="subscribe-page" class="hidden">
+        <section class="subscription">
+            <h2>Choose Your Subscription</h2>
+            <div class="subscription-options">
+                <div class="subscription-card">
+                    <h3>Every 2 Weeks</h3>
+                    <p>Perfect for frequent bakers who love fresh cookie kits regularly</p>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>2 new unique recipe each month</li>
+                        <li>All premium non-perishable ingredients included</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <div class="price">€36/month</div>
+                    <button class="subscribe-btn" onclick="showPage('subscription-payment')">Subscribe</button>
+                </div>
+                <div class="subscription-card">
+                    <h3>Every Month</h3>
+                    <p>Ideal for those who want to bake at a relaxed pace</p>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>1 new unique recipe each month</li>
+                        <li>All premium non-perishable ingredients included</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <div class="price">€20/month</div>
+                    <button class="subscribe-btn" onclick="showPage('subscription-payment')">Subscribe</button>
+                </div>
+                <div class="subscription-card">
+                    <h3>Gift Set</h3>
+                    <p>3-month subscription with deliveries every 2 weeks - the perfect gift for baking enthusiasts!</p>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>A  new an unique recipe every time</li>
+                        <li>Beautiful custom message</li>
+                        <li>Elegantly packaged</li>
+                    </ul>
+                    <div class="price">€135</div>
+                    <button class="subscribe-btn" onclick="showPage('mbway-payment')">Buy Gift Set</button>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
 
-  <!-- PAGE: RATINGS -->
-  <div class="page" id="page-ratings">
-    <div class="container">
-      <div class="page-header">
-        <h1>All <span>Ratings</span></h1>
-        <p>Every rating submitted so far.</p>
-      </div>
-      <div class="list-header">
-        <span class="list-header-title">Ratings <span class="count-tag" id="countBadge"></span></span>
-        <div class="sort-row">
-          <label for="sortSelect">Sort</label>
-          <select id="sortSelect" onchange="renderRatings()">
-            <option value="newest">Newest first</option>
-            <option value="highest">Highest rated</option>
-            <option value="lowest">Lowest rated</option>
-            <option value="title">Title A–Z</option>
-          </select>
-        </div>
-      </div>
-      <div class="ratings-list" id="ratingsList"></div>
+    <!-- Recipes Page -->
+    <div id="recipes-page" class="hidden">
+        <section class="recipes">
+            <h2>Our Cookie Recipes</h2>
+            <div class="recipe-grid">
+                <div class="recipe-card" onclick="showRecipe('Overnight-Chocolate-Chip-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2022/02/12/dining/JT-Chocolate-Chip-Cookies/JT-Chocolate-Chip-Cookies-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Overnight Chocolate Chip Cookies</h3>
+                        <p class="recipe-time">⏱️ 35 minutes 🧊 12 hours</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('Cultured-Butter-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2013/10/09/dining/09APPE2/09JPAPPE1-jumbo.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Cultured Butter <br> Cookies</h3>
+                        <p class="recipe-time">⏱️ 30 minutes 🧊 2 hours</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('Mexican-Hot-Chocolate-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek6-hotchoc-fktb/29cookieweek6-hotchoc-fktb-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Mexican Hot Chocolate Cookies</h3>
+                        <p class="recipe-time">⏱️ 28 minutes 🧊 30 min</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('Caramelized-Gochujang-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2025/09/25/multimedia/29summer100rex5-cookies-qmkc/29summer100rex5-cookies-qmkc-threeByTwoMediumAt2X-v2.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Caramelized Gochujang Cookies</h3>
+                        <p class="recipe-time">⏱️ 22 minutes 🧊 15 min</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('Pistachio-Pinwheel-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2020/12/07/dining/cs-pistachio-pinwheels/merlin_180932526_f83d4853-083b-4b02-947d-dfa06b746508-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Pistachio Pinwheel Cookies</h3>
+                        <p class="recipe-time">⏱️ 40 minutes 🧊 45 min</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+                <div class="recipe-card" onclick="showRecipe('Matcha-Latte-Cookies')">
+                    <div class="recipe-image" style="background: url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek1-matcha-tpzw/29cookieweek1-matcha-tpzw-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover;"></div>
+                    <div class="recipe-info">
+                        <h3>Matcha Latte <br> Cookies</h3>
+                        <p class="recipe-time">⏱️ 26 minutes 🧊15 min</p>
+                        <button class="buy-now-btn" onclick="event.stopPropagation(); showPage('mbway-payment')">BUY NOW</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
 
-  <div class="toast" id="toast"></div>
+    <!-- Individual Recipe Pages -->
+    <div id="recipe-detail-page" class="hidden">
+        <section class="recipe-detail">
+            <div class="recipe-header">
+                <div id="detail-image" class="recipe-detail-image"></div>
+                <h1 id="detail-name"></h1>
+                <div class="recipe-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Difficulty</div>
+                        <div class="meta-value" id="detail-difficulty"></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Yield</div>
+                        <div class="meta-value" id="detail-yield"></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Time</div>
+                        <div class="meta-value" id="detail-time"></div>
+                    </div>
+                </div>
+                <button class="buy-now-btn" style="max-width: 300px; margin: 1rem auto; display: block;" onclick="showPage('mbway-payment')">BUY NOW</button>
+            </div>
+            <div class="recipe-content">
+                <div class="recipe-description">
+                    <h2>Description</h2>
+                    <p id="detail-description"></p>
+                </div>
+                <div class="divider"></div>
+                <div class="recipe-included">
+                    <h2>What's Included</h2>
+                    <ul id="detail-included"></ul>
+                </div>
+            </div>
+        </section>
+    </div>
 
-  <script>
-  const MOVIES = [
-    { title: "2001: A Space Odyssey", year: 1968, genre: "Sci-Fi" },
-    { title: "12 Years a Slave", year: 2013, genre: "Drama" },
-    { title: "1917", year: 2019, genre: "War" },
-    { title: "A Beautiful Mind", year: 2001, genre: "Drama" },
-    { title: "A Quiet Place", year: 2018, genre: "Horror" },
-    { title: "Alien", year: 1979, genre: "Sci-Fi" },
-    { title: "Aliens", year: 1986, genre: "Action" },
-    { title: "American History X", year: 1998, genre: "Drama" },
-    { title: "Arrival", year: 2016, genre: "Sci-Fi" },
-    { title: "Avatar", year: 2009, genre: "Sci-Fi" },
-    { title: "Avengers: Endgame", year: 2019, genre: "Action" },
-    { title: "Barbie", year: 2023, genre: "Comedy" },
-    { title: "Black Panther", year: 2018, genre: "Action" },
-    { title: "Black Swan", year: 2010, genre: "Drama" },
-    { title: "Blade Runner 2049", year: 2017, genre: "Sci-Fi" },
-    { title: "Bohemian Rhapsody", year: 2018, genre: "Drama" },
-    { title: "Casino Royale", year: 2006, genre: "Action" },
-    { title: "Die Hard", year: 1988, genre: "Action" },
-    { title: "Django Unchained", year: 2012, genre: "Western" },
-    { title: "Doctor Strange in the Multiverse of Madness", year: 2022, genre: "Action" },
-    { title: "Dune", year: 2021, genre: "Sci-Fi" },
-    { title: "Dune: Part Two", year: 2024, genre: "Sci-Fi" },
-    { title: "Dunkirk", year: 2017, genre: "War" },
-    { title: "Elvis", year: 2022, genre: "Drama" },
-    { title: "Eternal Sunshine of the Spotless Mind", year: 2004, genre: "Romance" },
-    { title: "Everything Everywhere All at Once", year: 2022, genre: "Sci-Fi" },
-    { title: "Ex Machina", year: 2014, genre: "Sci-Fi" },
-    { title: "Fight Club", year: 1999, genre: "Drama" },
-    { title: "Finding Nemo", year: 2003, genre: "Animation" },
-    { title: "Forrest Gump", year: 1994, genre: "Drama" },
-    { title: "Get Out", year: 2017, genre: "Horror" },
-    { title: "Glass Onion", year: 2022, genre: "Mystery" },
-    { title: "Gone Girl", year: 2014, genre: "Thriller" },
-    { title: "Good Will Hunting", year: 1997, genre: "Drama" },
-    { title: "Goodfellas", year: 1990, genre: "Crime" },
-    { title: "Gravity", year: 2013, genre: "Sci-Fi" },
-    { title: "Heat", year: 1995, genre: "Crime" },
-    { title: "Hereditary", year: 2018, genre: "Horror" },
-    { title: "Her", year: 2013, genre: "Romance" },
-    { title: "Inception", year: 2010, genre: "Sci-Fi" },
-    { title: "Inglourious Basterds", year: 2009, genre: "War" },
-    { title: "Interstellar", year: 2014, genre: "Sci-Fi" },
-    { title: "Iron Man", year: 2008, genre: "Action" },
-    { title: "Joker", year: 2019, genre: "Drama" },
-    { title: "John Wick", year: 2014, genre: "Action" },
-    { title: "Jurassic Park", year: 1993, genre: "Adventure" },
-    { title: "Knives Out", year: 2019, genre: "Mystery" },
-    { title: "La La Land", year: 2016, genre: "Romance" },
-    { title: "Lost in Translation", year: 2003, genre: "Drama" },
-    { title: "Mad Max: Fury Road", year: 2015, genre: "Action" },
-    { title: "Memento", year: 2000, genre: "Thriller" },
-    { title: "Midsommar", year: 2019, genre: "Horror" },
-    { title: "Mission: Impossible - Fallout", year: 2018, genre: "Action" },
-    { title: "Moneyball", year: 2011, genre: "Drama" },
-    { title: "Moonlight", year: 2016, genre: "Drama" },
-    { title: "No Country for Old Men", year: 2007, genre: "Crime" },
-    { title: "Once Upon a Time in Hollywood", year: 2019, genre: "Comedy" },
-    { title: "Oppenheimer", year: 2023, genre: "Drama" },
-    { title: "Parasite", year: 2019, genre: "Thriller" },
-    { title: "Princess Mononoke", year: 1997, genre: "Animation" },
-    { title: "Pulp Fiction", year: 1994, genre: "Crime" },
-    { title: "Requiem for a Dream", year: 2000, genre: "Drama" },
-    { title: "Schindler's List", year: 1993, genre: "Drama" },
-    { title: "Se7en", year: 1995, genre: "Crime" },
-    { title: "Shutter Island", year: 2010, genre: "Thriller" },
-    { title: "Skyfall", year: 2012, genre: "Action" },
-    { title: "Spider-Man: Into the Spider-Verse", year: 2018, genre: "Animation" },
-    { title: "Spirited Away", year: 2001, genre: "Animation" },
-    { title: "Star Wars: A New Hope", year: 1977, genre: "Sci-Fi" },
-    { title: "Star Wars: The Empire Strikes Back", year: 1980, genre: "Sci-Fi" },
-    { title: "The Batman", year: 2022, genre: "Action" },
-    { title: "The Conjuring", year: 2013, genre: "Horror" },
-    { title: "The Dark Knight", year: 2008, genre: "Action" },
-    { title: "The Departed", year: 2006, genre: "Crime" },
-    { title: "The Godfather", year: 1972, genre: "Crime" },
-    { title: "The Grand Budapest Hotel", year: 2014, genre: "Comedy" },
-    { title: "The Hateful Eight", year: 2015, genre: "Western" },
-    { title: "The Imitation Game", year: 2014, genre: "Drama" },
-    { title: "The Lion King", year: 1994, genre: "Animation" },
-    { title: "The Lord of the Rings: The Fellowship of the Ring", year: 2001, genre: "Fantasy" },
-    { title: "The Lord of the Rings: The Return of the King", year: 2003, genre: "Fantasy" },
-    { title: "The Martian", year: 2015, genre: "Sci-Fi" },
-    { title: "The Matrix", year: 1999, genre: "Sci-Fi" },
-    { title: "The Revenant", year: 2015, genre: "Adventure" },
-    { title: "The Shawshank Redemption", year: 1994, genre: "Drama" },
-    { title: "The Silence of the Lambs", year: 1991, genre: "Thriller" },
-    { title: "The Sixth Sense", year: 1999, genre: "Thriller" },
-    { title: "The Social Network", year: 2010, genre: "Drama" },
-    { title: "The Truman Show", year: 1998, genre: "Drama" },
-    { title: "The Wolf of Wall Street", year: 2013, genre: "Comedy" },
-    { title: "There Will Be Blood", year: 2007, genre: "Drama" },
-    { title: "Thor: Ragnarok", year: 2017, genre: "Action" },
-    { title: "Titanic", year: 1997, genre: "Romance" },
-    { title: "Top Gun: Maverick", year: 2022, genre: "Action" },
-    { title: "Toy Story", year: 1995, genre: "Animation" },
-    { title: "Terminator 2: Judgment Day", year: 1991, genre: "Action" },
-    { title: "Up", year: 2009, genre: "Animation" },
-    { title: "WALL-E", year: 2008, genre: "Animation" },
-    { title: "Whiplash", year: 2014, genre: "Drama" },
-    { title: "Zodiac", year: 2007, genre: "Crime" },
-  ];
-
-  const KEY = 'movieRatings_v1';
-  let selMovie = null;
-  let ddItems = [];
-  let ddIdx = -1;
-
-  function loadRatings() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-    catch { return []; }
-  }
-
-  function saveRatings(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
-
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function starsFor(score) {
-    const full = Math.round(score / 2);
-    return Array.from({length:5}, (_,i) => i < full ? '★' : '☆').join('');
-  }
-
-  /* NAV */
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
-    ['rate','movies','ratings'].forEach((n,i) => {
-      if (n === name) document.querySelectorAll('.nav-tab')[i].classList.add('active');
-    });
-    closeDd();
-    if (name === 'ratings') renderRatings();
-    if (name === 'movies')  renderTiles();
-  }
-
-  /* RATING FORM */
-  function updateRating(v) {
-    const val = parseFloat(v).toFixed(1);
-    document.getElementById('ratingDisplay').textContent = val;
-    document.getElementById('starDisplay').textContent = starsFor(parseFloat(val));
-  }
-
-  function updateCharCount() {
-    const len = document.getElementById('commentInput').value.length;
-    const el = document.getElementById('charCount');
-    el.textContent = len + ' / 200';
-    el.className = 'char-count' + (len >= 180 ? ' warn' : '');
-  }
-
-  /* DROPDOWN */
-  function onMovieSearch() {
-    selMovie = null;
-    document.getElementById('selPill').classList.remove('on');
-    const q = document.getElementById('movieSearch').value.toLowerCase().trim();
-    if (!q) { closeDd(); return; }
-    ddItems = MOVIES.filter(m =>
-      m.title.toLowerCase().includes(q) || String(m.year).includes(q)
-    ).slice(0, 14);
-    renderDd();
-  }
-
-  function renderDd() {
-    const dd = document.getElementById('movieDd');
-    if (!ddItems.length) { dd.classList.remove('open'); return; }
-    dd.innerHTML = ddItems.map((m, i) =>
-      `<div class="movie-option" data-i="${i}" onmousedown="pickMovie(${i})">
-        <span>${esc(m.title)}</span>
-        <span class="opt-year">${m.year}</span>
-        <span class="opt-genre">${m.genre}</span>
-      </div>`
-    ).join('');
-    ddIdx = -1;
-    dd.classList.add('open');
-  }
-
-  function openDd() {
-    const q = document.getElementById('movieSearch').value.toLowerCase().trim();
-    if (q && !selMovie) renderDd();
-  }
-
-  function closeDd() {
-    document.getElementById('movieDd').classList.remove('open');
-    ddIdx = -1;
-  }
-
-  function onMovieKey(e) {
-    const dd = document.getElementById('movieDd');
-    if (!dd.classList.contains('open')) return;
-    const items = dd.querySelectorAll('.movie-option');
-    if (e.key === 'ArrowDown') { e.preventDefault(); ddIdx = Math.min(ddIdx+1, items.length-1); hlDd(items); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); ddIdx = Math.max(ddIdx-1, 0); hlDd(items); }
-    else if (e.key === 'Enter' && ddIdx >= 0) { e.preventDefault(); pickMovie(ddIdx); }
-    else if (e.key === 'Escape') closeDd();
-  }
-
-  function hlDd(items) {
-    items.forEach((el, i) => el.classList.toggle('hl', i === ddIdx));
-  }
-
-  function pickMovie(i) {
-    const m = ddItems[i];
-    if (!m) return;
-    selMovie = m;
-    document.getElementById('movieSearch').value = '';
-    document.getElementById('pillText').textContent = m.title + ' (' + m.year + ')';
-    document.getElementById('selPill').classList.add('on');
-    closeDd();
-  }
-
-  function clearMovie() {
-    selMovie = null;
-    document.getElementById('movieSearch').value = '';
-    document.getElementById('selPill').classList.remove('on');
-  }
-
-  function rateMovie(idx) {
-    selMovie = MOVIES[idx];
-    document.getElementById('pillText').textContent = selMovie.title + ' (' + selMovie.year + ')';
-    document.getElementById('selPill').classList.add('on');
-    document.getElementById('movieSearch').value = '';
-    showPage('rate');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  /* SUBMIT */
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2400);
-  }
-
-  function submitRating() {
-    if (!selMovie)    { showToast('Please select a movie'); return; }
-    const user    = document.getElementById('userName').value.trim();
-    const date    = document.getElementById('dateWatched').value;
-    const rating  = parseFloat(document.getElementById('ratingSlider').value);
-    const comment = document.getElementById('commentInput').value.trim();
-    if (!user) { showToast('Please enter your name'); return; }
-    if (!date) { showToast('Please select a date'); return; }
-    const list = loadRatings();
-    list.push({ id: Date.now(), title: selMovie.title, year: selMovie.year, genre: selMovie.genre, user, date, rating, comment });
-    saveRatings(list);
-    clearMovie();
-    document.getElementById('userName').value = '';
-    document.getElementById('dateWatched').value = '';
-    document.getElementById('commentInput').value = '';
-    document.getElementById('ratingSlider').value = 7;
-    updateRating(7);
-    updateCharCount();
-    showToast('Rating saved!');
-  }
-
-  /* RATINGS PAGE */
-  function renderRatings() {
-    const list = loadRatings();
-    const sort = document.getElementById('sortSelect').value;
-    const sorted = [...list].sort((a,b) => {
-      if (sort==='newest')  return b.id - a.id;
-      if (sort==='highest') return b.rating - a.rating;
-      if (sort==='lowest')  return a.rating - b.rating;
-      if (sort==='title')   return a.title.localeCompare(b.title);
-      return 0;
-    });
-    document.getElementById('countBadge').textContent =
-      list.length === 0 ? '' : list.length === 1 ? '· 1 entry' : `· ${list.length} entries`;
-    const el = document.getElementById('ratingsList');
-    if (!sorted.length) { el.innerHTML = '<div class="empty">No ratings yet — add the first one.</div>'; return; }
-    el.innerHTML = sorted.map(r => {
-      const d = new Date(r.date + 'T00:00:00');
-      const dateStr = d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
-      const commentHtml = r.comment ? `<div class="rc-comment">"${esc(r.comment)}"</div>` : '';
-      const genreHtml   = r.genre   ? `<span class="rc-genre">${esc(r.genre)}</span>` : '';
-      return `<div class="rating-card">
-        <div class="rc-top">
-          <span class="rc-title">${esc(r.title)}<span class="rc-title-year">${r.year||''}</span></span>
-          <span class="rc-score">${r.rating.toFixed(1)} / 10</span>
+    <!-- Subscription Payment Page -->
+    <div id="subscription-payment-page" class="hidden">
+        <div class="payment-page">
+            <h1>Complete Your Subscription</h1>
+            <p>To pay for your subscription, please contact us at:</p>
+            <p><a href="mailto:bakits.pt@gmail.com">bakits.pt@gmail.com</a></p>
+            <p>We'll get back to you shortly with payment instructions!</p>
+            <button class="back-btn" onclick="sendSubscriptionEmail()">Send Inquiry Email</button>
         </div>
-        <div class="rc-meta">
-          <span class="rc-stars">${starsFor(r.rating)}</span>
-          ${genreHtml}
-          <span>by ${esc(r.user)}</span>
-          <span>${dateStr}</span>
+    </div>
+
+    <!-- Mbway Payment Page -->
+    <div id="mbway-payment-page" class="hidden">
+        <div class="payment-page">
+            <h1>Payment Method</h1>
+            <p>We accept payment via <strong>Mbway</strong></p>
+            <p>Please contact us at <a href="mailto:bakits.pt@gmail.com">bakits.pt@gmail.com</a> to complete your purchase with Mbway payment.</p>
+            <button class="back-btn" onclick="sendRecipeEmail()">Send Purchase Email</button>
         </div>
-        ${commentHtml}
-      </div>`;
-    }).join('');
-  }
+    </div>
 
-  /* MOVIES PAGE */
-  function buildGenreFilter() {
-    const genres = [...new Set(MOVIES.map(m => m.genre))].sort();
-    const sel = document.getElementById('genreFilter');
-    genres.forEach(g => {
-      const o = document.createElement('option');
-      o.value = g; o.textContent = g;
-      sel.appendChild(o);
-    });
-  }
+    <!-- About Us Page -->
+    <div id="about-page" class="hidden">
+        <section class="about-section">
+            <h2>About Us</h2>
+            <div class="about-image" style="background: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover;"></div>
+            <div class="about-text">
+                <p>At Bakits, we believe that baking should be joyful, accessible, and delicious. Founded with a passion for bringing people together through the art of cookie making, we've created premium baking kits that take the guesswork out of creating perfect cookies every time. </p>
+                
+                <p>Our journey began with our love for baking. We saw how sharing homemade baked goods was such a small action that spread so much love to your friends and family. Today, we're proud to deliver that same quality, care and love to your doorstep. </p>
+                
+                <p>EEach Bakits box contains carefully measured, premium ingredients and easy-to-follow instructions that guarantee a fun loving experience baking . Whether you're a seasoned baker or just starting out, our kits make it simple to create memories and share happiness, one cookie at a time. Because when you bake with Bakits, you're not just making cookies – you're creating moments of joy. </p>
+                
+                <p class="signature">Make happiness, Bake happiness.</p>
+            </div>
+        </section>
+    </div>
 
-  function renderTiles() {
-    const q     = (document.getElementById('tileSearch').value || '').toLowerCase();
-    const genre = document.getElementById('genreFilter').value;
-    const ratings = loadRatings();
-    const avgMap = {}, cntMap = {};
-    ratings.forEach(r => {
-      avgMap[r.title] = (avgMap[r.title] || 0) + r.rating;
-      cntMap[r.title] = (cntMap[r.title] || 0) + 1;
-    });
-    const filtered = MOVIES.filter(m =>
-      (!q || m.title.toLowerCase().includes(q) || String(m.year).includes(q)) &&
-      (!genre || m.genre === genre)
-    );
-    const grid = document.getElementById('moviesGrid');
-    if (!filtered.length) {
-      grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No movies match.</div>';
-      return;
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bakits</h3>
+                <p>Bake happiness, make happiness</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="showPage('recipes'); return false;">Recipes</a></li>
+                    <li><a href="#" onclick="showPage('subscribe'); return false;">Subscribe</a></li>
+                    <li><a href="#" onclick="showPage('about'); return false;">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:bakits.pt@gmail.com">bakits.pt@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bakits. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Recipe data
+        const recipes = {
+            'Overnight-Chocolate-Chip-Cookies': {
+                name: 'Overnight Chocolate Chip Cookies',
+                image: "url('https://static01.nyt.com/images/2022/02/12/dining/JT-Chocolate-Chip-Cookies/JT-Chocolate-Chip-Cookies-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Medium',
+                yield: '18 cookies',
+                time: '35 minutes, 12 hour chilling',
+                description: 'Our Classic Chocolate Chip cookie is a timeless favorite that brings joy to every bite. Made with premium Belgian chocolate chips and real butter, these cookies deliver the perfect balance of crispy edges and chewy centers. The recipe has been perfected over years to ensure that golden-brown exterior and melty chocolate goodness. Whether you\'re baking for a special occasion or just treating yourself, these cookies are guaranteed to become a household staple.',
+                included: [
+                    'All premeasured non-perishable ingredients needed',
+                    'Premium all-purpose flour',
+                    'Authentic 70% chocolate chips',
+                    'Pure vanilla extract',
+                    'Rich brown sugar for an extra caramelized flavor',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'Mexican-Hot-Chocolate-Cookies': {
+                name: 'Mexican Hot Chocolate Cookies',
+                image: "url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek6-hotchoc-fktb/29cookieweek6-hotchoc-fktb-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Medium',
+                yield: '15 cookies',
+                time: '45 minutes,  30 min chilling',
+                description: 'A wholesome and hearty cookie that combines rolled oats with plump, juicy raisins. Our Oatmeal Raisin cookies offer a delightful chewiness and natural sweetness that makes them perfect for breakfast or an afternoon snack. Enhanced with a hint of cinnamon and nutmeg, each bite brings warmth and comfort. These cookies are loved by health-conscious bakers who don\'t want to compromise on flavor.',
+                included: [
+                    'All premeasured non-perishable ingredients needed',
+                    'Premium cayanne pepper powder',
+                    'Rich and organic cinnamon',
+                    'Nutmeg spice',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'Cultured-Butter-Cookies': {
+                name: 'Cultured Butter Cookies',
+                image: "url('https://static01.nyt.com/images/2013/10/09/dining/09APPE2/09JPAPPE1-jumbo.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Easy',
+                yield: '27 cookies',
+                time: '28 minutes, 2 hours chilling',
+                description: 'For the true chocolate lover, our Double Chocolate Delight is an indulgent experience. Rich cocoa powder is combined with dark chocolate chunks to create an intensely chocolatey cookie with a fudgy texture. The cookies have a beautiful crackled surface and maintain their soft, decadent interior. Perfect for special occasions or when you need a serious chocolate fix.',
+                included: [
+                    'All pre-measured non-perishable ingredients needed',
+                    'Premium vanilla extract',
+                    'Demarara sugar for a delightful crunch',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'Caramelized-Gochujang-Cookies': {
+                name: 'Caramelized Gochujang Cookies',
+                image: "url('https://static01.nyt.com/images/2025/09/25/multimedia/29summer100rex5-cookies-qmkc/29summer100rex5-cookies-qmkc-threeByTwoMediumAt2X-v2.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Easy',
+                yield: '16 cookies',
+                time: '22 minutes, 15 minute chilling',
+                description: 'Our Peanut Butter Bliss cookies are a peanut butter lover\'s dream come true. Made with creamy peanut butter and featuring the classic crisscross pattern on top, these cookies deliver rich, nutty flavor in every bite. They have a wonderful tender crumb and that signature peanut butter cookie texture. Simple to make yet incredibly satisfying.',
+                included: [
+                    'All premeasured non-perishable ingredients needed',
+                    'Gochujang - a fermented Korean chili paste with a hint of sweetness',
+                    'Dark brown sugar for an extra carmelized flavor',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'Pistachio-Pinwheel-Cookies': {
+                name: 'Pistachio Pinwheel Cookies',
+                image: "url('https://static01.nyt.com/images/2020/12/07/dining/cs-pistachio-pinwheels/merlin_180932526_f83d4853-083b-4b02-947d-dfa06b746508-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Easy',
+                yield: '12 cookies',
+                time: '45 minutes, 30 minute chilling',
+                description: 'Sometimes simplicity is perfection. Our Classic Sugar Cookies are buttery, tender, and topped with sparkling sugar crystals. These versatile cookies are perfect for any occasion and can be decorated to match any theme. The dough is easy to work with and the cookies hold their shape beautifully, making them ideal for cookie decorating parties or simple everyday treats.',
+                included: [
+                    'All premeasured non-perishable ingredients needed',
+                    'Premium almond flour',
+                    'Pre-blended pistachios',
+                    'Almond extract',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            },
+            'Matcha-Latte-Cookies': {
+                name: 'Matcha Latte Cookies',
+                image: "url('https://static01.nyt.com/images/2023/11/29/multimedia/29cookieweek1-matcha-tpzw/29cookieweek1-matcha-tpzw-threeByTwoMediumAt2X.jpg?quality=75&auto=webp') center/cover",
+                difficulty: 'Easy',
+                yield: '12 cookies',
+                time: '26 minutes',
+                description: 'Rolled in cinnamon sugar and baked to perfection, our Snickerdoodle cookies are a cozy treat that brings back childhood memories. These cookies have a distinctive tangy flavor from cream of tartar and a wonderful soft, chewy texture. The cinnamon-sugar coating creates a slightly crispy exterior that gives way to a tender center. They\'re the perfect companion to a glass of cold milk or hot cocoa.',
+                included: [
+                    'Premium Matcha)',
+                    'Pure vanilla extract',
+                    'Creamy almond butter',
+                    'QR code with video instruction',
+                    'Step-by-step recipe card with the exact measurements so that you can repeat the recipe whenever you want'
+                ]
+            }
+        };
+
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 3000);
+
+        // Page navigation
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.add('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
+            
+            // Show selected page
+            switch(page) {
+                case 'home':
+                    document.getElementById('home-page').classList.remove('hidden');
+                    break;
+                case 'subscribe':
+                    document.getElementById('subscribe-page').classList.remove('hidden');
+                    break;
+                case 'recipes':
+                    document.getElementById('recipes-page').classList.remove('hidden');
+                    break;
+                case 'subscription-payment':
+                    document.getElementById('subscription-payment-page').classList.remove('hidden');
+                    break;
+                case 'mbway-payment':
+                    document.getElementById('mbway-payment-page').classList.remove('hidden');
+                    break;
+                case 'about':
+                    document.getElementById('about-page').classList.remove('hidden');
+                    break;
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show individual recipe
+        function showRecipe(recipeId) {
+            const recipe = recipes[recipeId];
+            
+            // Populate recipe details
+            document.getElementById('detail-image').style.background = recipe.image;
+            document.getElementById('detail-name').textContent = recipe.name;
+            document.getElementById('detail-difficulty').textContent = recipe.difficulty;
+            document.getElementById('detail-yield').textContent = recipe.yield;
+            document.getElementById('detail-time').textContent = recipe.time;
+            document.getElementById('detail-description').textContent = recipe.description;
+            
+            // Populate included items
+            const includedList = document.getElementById('detail-included');
+            includedList.innerHTML = '';
+            recipe.included.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                includedList.appendChild(li);
+            });
+            
+            // Show recipe detail page
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('subscribe-page').classList.add('hidden');
+            document.getElementById('recipes-page').classList.add('hidden');
+            document.getElementById('recipe-detail-page').classList.remove('hidden');
+            document.getElementById('subscription-payment-page').classList.add('hidden');
+            document.getElementById('mbway-payment-page').classList.add('hidden');
+            document.getElementById('about-page').classList.add('hidden');
+            
+            window.scrollTo(0, 0);
+        }
+    // Email functions
+    function sendSubscriptionEmail() {
+        const subject = encodeURIComponent("Subscription Inquiry - Bakits");
+        const body = encodeURIComponent(
+            "Hello Bakits Team,\n\n" +
+            "I am interested in subscribing to your cookie kit service.\n\n" +
+            "Please provide me with:\n" +
+            "- Payment instructions for Mbway\n" +
+            "- Details about the subscription plan I selected\n" +
+            "- Any additional information needed to complete my subscription\n\n" +
+            "Thank you!\n\n" +
+            "Best regards"
+        );
+        
+        window.location.href = `mailto:bakits.pt@gmail.com?subject=${subject}&body=${body}`;
     }
-    grid.innerHTML = filtered.map(m => {
-      const idx = MOVIES.indexOf(m);
-      const cnt = cntMap[m.title] || 0;
-      const avg = cnt ? avgMap[m.title] / cnt : null;
-      const avgHtml = avg !== null
-        ? `<div class="tile-avg">★ <span class="tile-avg-num">${avg.toFixed(1)}</span> <span style="font-size:10px;color:var(--text-dim);">(${cnt})</span></div>`
-        : `<div class="tile-no-ratings">No ratings yet</div>`;
-      return `<div class="movie-tile" onclick="rateMovie(${idx})">
-        <div class="tile-genre">${esc(m.genre)}</div>
-        <div class="tile-title">${esc(m.title)}</div>
-        <div class="tile-year">${m.year}</div>
-        ${avgHtml}
-        <button class="rate-btn">Rate this ↗</button>
-      </div>`;
-    }).join('');
-  }
-
-  /* INIT */
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.movie-search-wrap')) closeDd();
-  });
-
-  buildGenreFilter();
-  updateRating(7);
-  </script>
+    
+    function sendRecipeEmail() {
+        const subject = encodeURIComponent("Recipe Kit Purchase - Bakits");
+        const body = encodeURIComponent(
+            "Hello Bakits Team,\n\n" +
+            "I would like to purchase a cookie recipe kit.\n\n" +
+            "Recipe: [Please specify which recipe you're interested in]\n\n" +
+            "Please provide me with:\n" +
+            "- Payment instructions for Mbway\n" +
+            "- Total cost including shipping\n" +
+            "- Estimated delivery time\n\n" +
+            "Thank you!\n\n" +
+            "Best regards"
+        );
+        
+        window.location.href = `mailto:bakits.pt@gmail.com?subject=${subject}&body=${body}`;
+    }
+        
+    </script>
 </body>
 </html>
