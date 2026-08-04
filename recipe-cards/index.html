@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakits Junior Bake Guides</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="recipes.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="editor-bar">
+        <div class="editor-brand">
+            <span>BAKITS</span>
+            <small>Recipe card studio</small>
+        </div>
+        <p>Click the light-grey prompts to add your tested recipe.</p>
+        <button id="print-cards" type="button">Print recipe cards</button>
+    </header>
+
+    <main id="recipe-cards" aria-label="Bakits junior recipe cards"></main>
+
+    <template id="recipe-card-template">
+        <article class="recipe-card">
+            <header class="card-masthead">
+                <a class="wordmark" href="../index.html" aria-label="Return to Bakits home">BAKITS</a>
+                <div class="edition">
+                    <span>JUNIOR BAKE GUIDE</span>
+                    <span class="card-number"></span>
+                </div>
+            </header>
+
+            <section class="recipe-heading">
+                <p class="kicker">MAKE HAPPINESS, BAKE HAPPINESS</p>
+                <h1 class="recipe-name"></h1>
+                <p class="recipe-intro editable" contenteditable="true"></p>
+            </section>
+
+            <dl class="recipe-facts">
+                <div><dt>Hands-on time</dt><dd class="make-time"></dd></div>
+                <div><dt>Makes</dt><dd class="recipe-yield"></dd></div>
+                <div><dt>Baker level</dt><dd class="difficulty"></dd></div>
+            </dl>
+
+            <section class="adult-note">
+                <p class="adult-label">ADULT STATION</p>
+                <div>
+                    <h2>Ask a grown-up to bake with you.</h2>
+                    <p class="safety-note editable" contenteditable="true"></p>
+                </div>
+            </section>
+
+            <div class="recipe-body">
+                <aside class="ingredients-panel">
+                    <section class="ingredient-group">
+                        <p class="section-number">01</p>
+                        <h2>Open your box</h2>
+                        <p class="section-note">Everything here is measured for you.</p>
+                        <ul class="box-items"></ul>
+                    </section>
+
+                    <section class="ingredient-group">
+                        <p class="section-number">02</p>
+                        <h2>Add from home</h2>
+                        <p class="section-note">Collect these before you begin.</p>
+                        <ul class="home-items"></ul>
+                    </section>
+                </aside>
+
+                <section class="method-panel">
+                    <div class="method-heading">
+                        <div>
+                            <p class="section-number">03</p>
+                            <h2>Let’s bake</h2>
+                        </div>
+                        <p>One step at a time.<br>Tick it when it’s done.</p>
+                    </div>
+                    <ol class="steps-list"></ol>
+                </section>
+            </div>
+
+            <footer class="card-footer">
+                <div class="tip-block">
+                    <span>BAKER’S TIP</span>
+                    <p class="top-tip editable" contenteditable="true"></p>
+                </div>
+                <div class="finish-block">
+                    <strong>You made it.</strong>
+                    <span>Cool, share & enjoy.</span>
+                </div>
+            </footer>
+        </article>
+    </template>
+</body>
+</html>
